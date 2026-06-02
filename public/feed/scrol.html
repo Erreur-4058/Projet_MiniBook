@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+/*
+Source - https://stackoverflow.com/a/54101063
+Posted by Alexander O'Mara, modified by community. See post 'Timeline' for change history
+Retrieved 2026-05-13, License - CC BY-SA 4.0
+*/
+
+.scroll {
+  width: 30%;
+  height: 100px;
+  border: 1px solid rgb(255, 0, 195);
+  overflow: scroll;
+  display: inline-block;
+}
+.scroll-width-auto {
+  scrollbar-width: auto;
+}
+.scroll-width-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255,0,195) rgb(0, 242, 255);
+}
+.scroll-width-none {
+  scrollbar-width: none;
+}
+</style>
+<body>
+<!--
+Source - https://stackoverflow.com/a/54101063
+Posted by Alexander O'Mara, modified by community. See post 'Timeline' for change history
+Retrieved 2026-05-13, License - CC BY-SA 4.0
+-->
+
+<div class="scroll scroll-width-auto">
+<p>auto</p><p>auto</p><p>auto</p><p>auto</p><p>auto</p><p>auto</p>
+</div>
+
+<div class="scroll scroll-width-thin">
+<p>thin</p><p>thin</p><p>thin</p><p>thin</p><p>thin</p><p>thin</p>
+</div>
+
+<div class="scroll scroll-width-none">
+<p>none</p><p>none</p><p>none</p><p>none</p><p>none</p><p>none</p>
+</div>
+</body>
+</html>

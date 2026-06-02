@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bienvenue | MNB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
+ 
+  
+    <link id="favicon" rel="icon" type="image/png" href="../../asset/favicon/256_frame1.png">
+
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --xp-blue1: #0A246A;
+  --xp-blue2: #1D5FBE;
+  --xp-sky: #7FBEF5;
+  --xp-light: #D5E8FB;
+  --xp-white: #ffffff;
+  --xp-btn: #ECE9D8;
+  --xp-green: #3BAF25;
+  --xp-orange: #F0A000;
+  --xp-msg: #EFF6FF;
+  --xp-shadow: rgba(0,0,0,0.18);
+  --xp-radius: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body-wrap {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(180deg, #2A7FD4 0%, #6CB8F0 40%, #90C84A 100%);
+  min-height: 100vh;
+  padding: 0;
+}
+
+.xp-window {
+  background: var(--xp-btn);
+  border: 2px solid #0A246A;
+  border-radius: 8px 8px 6px 6px;
+  box-shadow: 3px 3px 12px var(--xp-shadow), inset 0 1px 0 rgba(255,255,255,0.7);
+  overflow: hidden;
+  max-width: 820px;
+  margin: 0 auto;
+  font-family: 'Nunito', sans-serif;
+}
+
+.xp-titlebar {
+  background: linear-gradient(180deg, #2F7FD0 0%, #1155BB 45%, #0C3C98 100%);
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+
+.xp-titlebar .title-icon {
+  font-size: 14px;
+}
+
+.xp-title-text {
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  flex: 1;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  font-family: 'Tahoma', sans-serif;
+}
+
+.xp-btns {
+  display: flex;
+  gap: 2px;
+}
+
+.xp-wbtn {
+  width: 21px;
+  height: 21px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.4);
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Tahoma', sans-serif;
+  color: white;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+  line-height: 1;
+  transition: filter 0.1s;
+}
+.xp-wbtn:hover { filter: brightness(1.2); }
+.xp-wbtn.min { background: linear-gradient(180deg, #4EAAFF 0%, #1B74D0 100%); }
+.xp-wbtn.max { background: linear-gradient(180deg, #4EAAFF 0%, #1B74D0 100%); }
+.xp-wbtn.close { background: linear-gradient(180deg, #FF5C5C 0%, #CC1A1A 100%); }
+
+.xp-menubar {
+  background: var(--xp-btn);
+  padding: 2px 8px;
+  display: flex;
+  gap: 2px;
+  border-bottom: 1px solid #A0A0A0;
+}
+
+.xp-menu-item {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 12px;
+  color: #1a1a1a;
+  padding: 2px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-underline-offset: 2px;
+}
+.xp-menu-item:hover { background: #316AC5; color: white; }
+
+.xp-content {
+  display: flex;
+  gap: 0;
+  background: white;
+  min-height: 500px;
+}
+
+/* FEED */
+.xp-feed {
+  flex: 1;
+  padding: 12px;
+  background: #F0F7FF;
+  overflow-y: auto;
+  max-height: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-card {
+  background: white;
+  border: 1px solid #B8D4F0;
+  border-radius: var(--xp-radius);
+  box-shadow: 1px 2px 6px rgba(20, 80, 180, 0.08);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.post-card:hover { box-shadow: 2px 4px 14px rgba(20, 80, 180, 0.15); }
+
+.post-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(135deg, #2A7FD4, #6CB8F0);
+}
+
+.post-img-placeholder {
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(135deg, #2A7FD4 0%, #5AADEA 50%, #90C84A 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 48px;
+  padding-bottom: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.post-img-placeholder .cloud {
+  position: absolute;
+  background: rgba(255,255,255,0.85);
+  border-radius: 50px;
+}
+.post-img-placeholder .cloud1 { width: 80px; height: 30px; top: 20px; left: 20px; }
+.post-img-placeholder .cloud2 { width: 60px; height: 24px; top: 35px; left: 70px; box-shadow: -18px -10px 0 14px rgba(255,255,255,0.85), 16px -6px 0 10px rgba(255,255,255,0.85); }
+.post-img-placeholder .cloud3 { width: 55px; height: 22px; top: 18px; right: 40px; box-shadow: -14px -8px 0 10px rgba(255,255,255,0.85); }
+.post-img-placeholder .hill {
+  position: absolute;
+  bottom: 0; left: -10px;
+  width: 120%;
+  height: 60px;
+  background: #5CB830;
+  border-radius: 70% 70% 0 0;
+}
+.post-img-placeholder .tux-emoji { position: relative; z-index: 2; font-size: 44px; margin-bottom: 4px; }
+
+.post-body {
+  padding: 8px 10px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.xp-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border: 2px solid #4A90D9;
+  background: linear-gradient(135deg, #D5E8FB, #A0C8F0);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  overflow: hidden;
+}
+
+.post-meta { flex: 1; }
+.post-author {
+  font-weight: 800;
+  font-size: 13px;
+  color: #1155BB;
+  font-family: 'Tahoma', sans-serif;
+}
+.post-time {
+  font-size: 11px;
+  color: #7090B0;
+  font-family: 'Tahoma', sans-serif;
+}
+
+.post-text {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 13px;
+  color: #2a2a2a;
+  line-height: 1.5;
+  background: #F0F7FF;
+  border: 1px solid #C8DCF0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.post-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.xp-btn {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 12px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #ECE9D8 40%, #D4CEB8 100%);
+  border: 1px solid #707070;
+  border-radius: 3px;
+  padding: 3px 12px;
+  cursor: pointer;
+  color: #1a1a1a;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+  transition: filter 0.1s;
+  display: flex; align-items: center; gap: 4px;
+}
+.xp-btn:hover { filter: brightness(0.95); background: linear-gradient(180deg, #EEF0FF 0%, #D0D8F0 100%); border-color: #316AC5; }
+.xp-btn:active { box-shadow: inset 1px 1px 3px rgba(0,0,0,0.3); }
+.xp-btn.like-active { color: #CC2200; font-weight: 700; }
+
+.like-count {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 12px;
+  color: #7090B0;
+  margin-left: 2px;
+}
+
+/* SIDEBAR */
+.xp-sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  background: var(--xp-btn);
+  border-left: 1px solid #A0B8D0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-user {
+  background: linear-gradient(180deg, #2F7FD0 0%, #1155BB 100%);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.7);
+  background: linear-gradient(135deg, #D5E8FB, #7FBEF5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.sidebar-username {
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  font-family: 'Tahoma', sans-serif;
+}
+
+.sidebar-status {
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+}
+.status-dot { width: 8px; height: 8px; background: #3BF03B; border-radius: 50%; box-shadow: 0 0 4px #3BF03B; }
+
+.sidebar-section {
+  padding: 10px 12px;
+  border-bottom: 1px solid #C0C8D8;
+}
+
+.sidebar-label {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--xp-blue1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.xp-input {
+  width: 100%;
+  padding: 5px 8px;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 12px;
+  border: 1px solid #7090B0;
+  border-radius: 3px;
+  background: white;
+  color: #1a1a1a;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.15);
+  margin-bottom: 7px;
+  resize: vertical;
+}
+.xp-input:focus { outline: none; border-color: #316AC5; box-shadow: inset 1px 1px 3px rgba(0,0,0,0.15), 0 0 0 2px rgba(49,106,197,0.2); }
+
+.xp-file-label {
+  display: inline-block;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 11px;
+  color: #444;
+  background: linear-gradient(180deg, #FFFFFF 0%, #ECE9D8 40%, #D4CEB8 100%);
+  border: 1px solid #707070;
+  border-radius: 3px;
+  padding: 3px 8px;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+  margin-bottom: 6px;
+  width: 100%;
+  text-align: center;
+}
+.xp-file-input { display: none; }
+
+.submit-btn {
+  width: 100%;
+  padding: 6px;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  background: linear-gradient(180deg, #4EAAFF 0%, #1B74D0 50%, #0D5BB0 100%);
+  border: 1px solid #0A246A;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2);
+  transition: filter 0.1s;
+}
+.submit-btn:hover { filter: brightness(1.1); }
+.submit-btn:active { box-shadow: inset 1px 1px 4px rgba(0,0,0,0.4); }
+
+.xp-file-name {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 10px;
+  color: #7090B0;
+  margin-bottom: 6px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.preview-mini {
+  width: 100%;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #B0C8E0;
+  margin-bottom: 6px;
+  display: none;
+}
+
+.notify-bubble {
+  display: inline-block;
+  background: #CC2200;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Tahoma', sans-serif;
+  border-radius: 10px;
+  padding: 1px 6px;
+  margin-left: 4px;
+}
+
+.xp-statusbar {
+  background: var(--xp-btn);
+  border-top: 1px solid #A0A0A0;
+  padding: 3px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 11px;
+  color: #444;
+}
+.xp-statusbar .divider { width: 1px; height: 14px; background: #A0A0A0; }
+
+.balloon {
+  position: absolute;
+  bottom: 60px;
+  right: 10px;
+  background: linear-gradient(180deg, #FFFDD0 0%, #FFF8A0 100%);
+  border: 1px solid #B0A000;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 11px;
+  max-width: 180px;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  display: none;
+}
+.msn-avatar-container {
+  width: 114px;
+  height: 114px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid #586170;
+  border-radius: 8px;
+  position: relative;
+}
+
+.msn-avatar-container .picture {
+  width: 96px;
+  height: 96px;
+  border: 1px solid #586170;
+  border-radius: 8px;
+  transform: translateY(4px);
+}
+
+.msn-avatar-container .down {
+  border: 0;
+  background: transparent;
+  color: #4D5967;
+  transform: scaleY(0.5);
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.msn-avatar-container .expand {
+  position: absolute;
+  top: 4px;
+  right: -9px;
+}
+
+
+
+</style>
+
+
+<div class="xp-window" style="width: 100%; max-width: 820px;">
+
+  <div class="xp-titlebar">
+    <span class="title-icon">🐧</span>
+    <span class="xp-title-text">MNB — Mon réseau &amp; bureau</span>
+    <div class="xp-btns">
+      <div class="xp-wbtn min" title="Réduire">─</div>
+      <div class="xp-wbtn max" title="Agrandir">▢</div>
+      <div class="xp-wbtn close" title="Fermer" onclick="this.closest('.xp-window').style.opacity='0.5'">✕</div>
+    </div>
+  </div>
+
+  <div class="xp-menubar">
+    <span class="xp-menu-item">Fichier</span>
+    <span class="xp-menu-item">Afficher</span>
+    <span class="xp-menu-item">Publications</span>
+    <span class="xp-menu-item">Aide</span>
+  </div>
+
+  <div class="xp-content">
+
+    <!-- FEED -->
+    <div class="xp-feed" id="feed">
+     
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="xp-sidebar">
+     <div class="sidebar-user">
+      <div class="msn-avatar-container" id="avatar-container" data-image="msn">
+    <img class="picture" id="avatar-picture" src="tux.jpg" alt="Avatar">
+    <button class="down">⯆</button>
+    
+  </div>
+  <div class="sidebar-username">tux</div>
+  <div class="sidebar-status">
+    <div class="status-dot"></div>
+    <span>En ligne</span>
+  </div>
+</div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">✏️ Nouvelle publication</div>
+        <textarea class="xp-input" id="msg-input" rows="3" placeholder="Écrire un message..."></textarea>
+        <label class="xp-file-label" for="img-input">📎 Joindre une image</label>
+        <input type="file" class="xp-file-input" id="img-input" accept="image/*" onchange="previewFile(this)" />
+        <div class="xp-file-name" id="file-name">Aucun fichier</div>
+        <img class="preview-mini" id="preview-mini" alt="aperçu" />
+        <button class="submit-btn" onclick="addPost()">📨 Envoyer</button>
+      </div>
+
+      
+
+    </div>
+  </div>
+
+  <div class="xp-statusbar">
+    <span>🟢 Connecté</span>
+    <div class="divider"></div>
+    <span id="post-count">0 publications</span>
+    <div class="divider"></div>
+    <span>MNB v1.0</span>
+  </div>
+
+</div>
+
+<script>
+function toggleLike(btn, id) {
+  const count = document.getElementById(id);
+  const isLiked = btn.classList.toggle('like-active');
+  count.textContent = parseInt(count.textContent) + (isLiked ? 1 : -1);
+}
+
+function deletePost(id) {
+  const p = document.getElementById(id);
+  if (p) {
+    p.style.transition = 'all 0.3s';
+    p.style.opacity = '0';
+    p.style.transform = 'translateX(-20px)';
+    setTimeout(() => { p.remove(); updateCount(); }, 300);
+  }
+}
+
+function updateCount() {
+  const n = document.querySelectorAll('.post-card').length;
+  document.getElementById('post-count').textContent = n + ' publication' + (n > 1 ? 's' : '');
+}
+
+function previewFile(input) {
+  const name = input.files[0]?.name || 'Aucun fichier';
+  document.getElementById('file-name').textContent = name;
+  const mini = document.getElementById('preview-mini');
+  if (input.files[0]) {
+    const r = new FileReader();
+    r.onload = e => { mini.src = e.target.result; mini.style.display = 'block'; };
+    r.readAsDataURL(input.files[0]);
+  }
+}
+
+function addPost() {
+  const msg = document.getElementById('msg-input').value.trim();
+  const fileInput = document.getElementById('img-input');
+  const mini = document.getElementById('preview-mini');
+  if (!msg && !fileInput.files[0]) return;
+
+  const id = 'post-' + Date.now();
+  const div = document.createElement('div');
+  div.className = 'post-card';
+  div.id = id;
+  div.style.opacity = '0';
+  div.style.transform = 'translateY(10px)';
+
+  const imgHtml = mini.src && mini.style.display !== 'none'
+    ? `<img class="post-image" src="${mini.src}" alt=""/>`
+    : `<div class="post-img-placeholder"><div class="cloud cloud1"></div><div class="hill"></div><div class="tux-emoji">🐧</div></div>`;
+
+  const likeId = 'like' + Date.now();
+  div.innerHTML = `
+    ${imgHtml}
+    <div class="post-body">
+      <div class="post-header">
+        <div class="xp-avatar">🐧</div>
+        <div class="post-meta">
+          <div class="post-author">tux</div>
+          <div class="post-time">à l'instant</div>
+        </div>
+      </div>
+      ${msg ? `<div class="post-text">${msg}</div>` : ''}
+      <div class="post-actions">
+        <button class="xp-btn" onclick="toggleLike(this, '${likeId}')">❤️ J'aime <span class="like-count" id="${likeId}">0</span></button>
+        <button class="xp-btn" onclick="deletePost('${id}')">🗑️ Supprimer</button>
+      </div>
+    </div>`;
+
+  const feed = document.getElementById('feed');
+  feed.insertBefore(div, feed.firstChild);
+  requestAnimationFrame(() => {
+    div.style.transition = 'all 0.35s cubic-bezier(0.22,1,0.36,1)';
+    div.style.opacity = '1';
+    div.style.transform = 'none';
+  });
+
+  document.getElementById('msg-input').value = '';
+  document.getElementById('file-name').textContent = 'Aucun fichier';
+  mini.style.display = 'none';
+  fileInput.value = '';
+  updateCount();
+}
+</script>
+
+
