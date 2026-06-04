@@ -41,7 +41,7 @@
           if (Storage.login(email, pw)) {
             window.location.href = '../feed/index.html';
           } else {
-            alert('Email ou mot de passe incorrect.');
+            showModal();
             loginBtn.textContent = 'Se connecter';
             loginBtn.style.opacity = '1';
           }
@@ -56,6 +56,28 @@
     document.getElementById('password').addEventListener('input', () => {
       document.getElementById('pw-error').classList.remove('show');
     });
+
+    // Enter key support
+    [document.getElementById('email'), document.getElementById('password')].forEach(input => {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          loginBtn.click();
+        }
+      });
+    });
+
+    function showModal() {
+        const modal = document.getElementById('error-modal');
+            const errorSound = new Audio('../../asset/sond/Windows XP Arrêt critique.wav');
+    errorSound.play().catch(e => console.log("L'audio n'a pas pu être lancé :", e));
+        modal.classList.add('show');
+
+    }
+
+    window.closeModal = function() {
+        const modal = document.getElementById('error-modal');
+        modal.classList.remove('show');
+    }
 
 
 

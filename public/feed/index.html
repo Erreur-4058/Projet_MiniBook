@@ -35,8 +35,8 @@
     </div>
 
     <div class="xp-menubar">
-      <span class="xp-menu-item">Fichier</span>
-      <span class="xp-menu-item">Afficher</span>
+      <span class="xp-menu-item">Paramètres</span>
+      <span class="xp-menu-item">Statistiques</span>
       <span class="xp-menu-item">Publications</span>
       <span class="xp-menu-item">Aide</span>
     </div>
@@ -70,13 +70,13 @@
 
 
         <div class="sidebar-section">
-          <div class="sidebar-label">✏️ Nouvelle publication</div>
+          <div class="sidebar-label"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M92.69,216H48a8,8,0,0,1-8-8V163.31a8,8,0,0,1,2.34-5.65L165.66,34.34a8,8,0,0,1,11.31,0L221.66,79a8,8,0,0,1,0,11.31L98.34,213.66A8,8,0,0,1,92.69,216Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="136" y1="64" x2="192" y2="120" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="164" y1="92" x2="68" y2="188" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="95.49" y1="215.49" x2="40.51" y2="160.51" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg> Nouvelle publication</div>
           <textarea class="xp-input" id="msg-input" rows="3" placeholder="Écrire un message..."></textarea>
-          <label class="xp-file-label" for="img-input">📎 Joindre une image</label>
+          <label class="xp-file-label" for="img-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M160,80,76.69,164.69a16,16,0,0,0,22.63,22.62L198.63,86.63a32,32,0,0,0-45.26-45.26L54.06,142.06a48,48,0,0,0,67.88,67.88L204,128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg> Joindre une image</label>
           <input type="file" class="xp-file-input" id="img-input" accept="image/*" onchange="previewFile(this)" />
           <div class="xp-file-name" id="file-name">Aucun fichier</div>
           <img class="preview-mini" id="preview-mini" alt="aperçu" />
-          <button class="submit-btn" onclick="addPost()">📨 Envoyer</button>
+          <button class="submit-btn" onclick="addPost()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><polyline points="224 56 128 144 32 56" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M32,56H224a0,0,0,0,1,0,0V192a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V56A0,0,0,0,1,32,56Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="110.55" y1="128" x2="34.47" y2="197.74" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="221.53" y1="197.74" x2="145.45" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg> Envoyer</button>
         </div>
 
 
@@ -85,13 +85,69 @@
     </div>
 
     <div class="xp-statusbar">
-      <span>🟢 Connecté</span>
+      <span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 256 256" style="vertical-align: middle; margin-right: 4px;"><rect width="256" height="256" fill="none"/><circle cx="128" cy="128" r="96" fill="#3BF03B" stroke="#2A7FD4" stroke-width="16"/></svg>Connecté</span>
       <div class="divider"></div>
       <span id="post-count">0 publications</span>
       <div class="divider"></div>
       <span>MNB v1.0</span>
     </div>
 
+  </div>
+
+  <!-- Custom XP Modal for Post Deletion -->
+  <div class="modal-overlay" id="delete-modal">
+    <div class="xp-modal">
+      <div class="xp-titlebar">
+        <span class="title-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,96a12,12,0,1,1,12-12A12,12,0,0,1,128,176Z" fill="white"/></svg>
+        </span>
+        <span class="xp-title-text">Confirmation de suppression</span>
+        <div class="xp-btns">
+          <button class="xp-wbtn close" id="modal-close-btn">&#10005;</button>
+        </div>
+      </div>
+      <div class="xp-modal-body">
+        <div class="modal-content-row">
+          <div class="modal-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><circle cx="128" cy="128" r="96" fill="#CC1A1A"/><line x1="88" y1="88" x2="168" y2="168" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><line x1="168" y1="88" x2="88" y2="168" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg>
+          </div>
+          <p>Voulez-vous vraiment supprimer cette publication ?<br><strong>Cette action est irréversible.</strong></p>
+        </div>
+        <div class="xp-modal-footer">
+          <button class="xp-mbtn" id="confirm-delete-btn">Oui</button>
+          <button class="xp-mbtn" id="cancel-delete-btn">Non</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom XP Modal for Help -->
+  <div class="modal-overlay" id="help-modal">
+    <div class="xp-modal">
+      <div class="xp-titlebar">
+        <span class="title-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><circle cx="128" cy="128" r="96" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><circle cx="128" cy="180" r="12" fill="white"/><path d="M128,144c0-44,64-44,64-84a64,64,0,0,0-128,0" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+        </span>
+        <span class="xp-title-text">MNB — Aide</span>
+        <div class="xp-btns">
+          <button class="xp-wbtn close" id="help-close-btn">&#10005;</button>
+        </div>
+      </div>
+      <div class="xp-modal-body">
+        <div class="modal-content-row">
+          <div class="modal-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="32" height="32"><rect width="256" height="256" fill="none"/><circle cx="128" cy="128" r="96" fill="#2A7FD4"/><path d="M128,144c0-44,64-44,64-84a64,64,0,0,0-128,0" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><circle cx="128" cy="180" r="14" fill="white"/></svg>
+          </div>
+          <div class="help-text">
+            <p><strong>MiniBook v1.0 — Projet IHM</strong></p>
+            <p style="margin-top: 8px; font-size: 11px;">Utilisez la zone de texte dans la barre latérale pour publier des messages et partager des images avec vos amis.</p>
+          </div>
+        </div>
+        <div class="xp-modal-footer">
+          <button class="xp-mbtn" id="help-ok-btn">OK</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="../utils.js"></script>

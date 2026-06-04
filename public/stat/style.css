@@ -56,6 +56,13 @@ body {
   user-select: none;
 }
 
+.xp-titlebar .title-icon svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  color: white;
+}
+
 .xp-title-text {
   flex: 1;
   font-size: 13px;
@@ -116,7 +123,23 @@ body {
   display: flex; align-items: center; gap: 12px;
   box-shadow: 1px 2px 6px rgba(20, 80, 180, 0.08);
 }
-.stat-icon { font-size: 24px; }
+.stat-icon { 
+  font-size: 24px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--xp-blue1);
+}
+.stat-icon svg {
+  width: 28px;
+  height: 28px;
+  color: inherit;
+}
+
+/* Specific colors for stat icons */
+.stat-card:nth-child(1) .stat-icon { color: var(--xp-blue2); }
+.stat-card:nth-child(2) .stat-icon { color: #CC2200; }
+.stat-card:nth-child(3) .stat-icon { color: var(--xp-blue1); }
 .stat-value { font-size: 20px; font-weight: 800; color: var(--xp-blue2); }
 .stat-label { font-size: 11px; color: #7090B0; font-family: 'Tahoma', sans-serif; }
 
@@ -178,5 +201,11 @@ body {
   grid-column: 1 / span 2; grid-row: 4;
   background: var(--xp-btn); border-top: 1px solid #A0A0A0; padding: 4px 10px;
   display: flex; align-items: center; font-family: 'Tahoma', sans-serif; font-size: 11px; color: #444;
+}
+.xp-statusbar svg {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  margin-right: 4px;
 }
 .divider { width: 1px; height: 14px; background: #A0A0A0; margin: 0 10px; }

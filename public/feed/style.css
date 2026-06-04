@@ -1,4 +1,95 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+/* ===== Modal XP ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.visible {
+  display: flex;
+}
+
+.xp-modal {
+  background: #ECE9D8;
+  border: 2px solid #0A246A;
+  border-radius: 8px 8px 3px 3px;
+  box-shadow: 4px 4px 15px rgba(0,0,0,0.5);
+  width: min(400px, 90vw);
+  overflow: hidden;
+  animation: modalPop 0.2s cubic-bezier(0.17, 0.89, 0.32, 1.28);
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.xp-modal-body {
+  padding: 20px;
+  background: #ECE9D8;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-content-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.modal-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.xp-modal-body p {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 0.9rem;
+  color: #000;
+  line-height: 1.4;
+}
+
+.help-text p {
+    margin-bottom: 5px;
+}
+
+.xp-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.xp-mbtn {
+  min-width: 75px;
+  padding: 5px 12px;
+  border: 1px solid #003C74;
+  background: linear-gradient(180deg, #FFFFFF 0%, #ECE9D8 25%, #ECE9D8 75%, #D8D2BD 100%);
+  border-radius: 3px;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+}
+
+.xp-mbtn:hover {
+  border-color: #F0A000;
+  background: white;
+}
+
+.xp-mbtn:active {
+  background: #D8D2BD;
+  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+}
+
 
 :root {
   --xp-blue1: #0A246A;
@@ -41,8 +132,37 @@ body-wrap {
 
 /* Style moved to grid definition in .xp-window */
 
-.xp-titlebar .title-icon {
-  font-size: 14px;
+.xp-titlebar .title-icon svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  color: white;
+}
+
+/* Global SVG icon styles */
+svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  color: inherit;
+}
+
+.sidebar-label svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  vertical-align: middle;
+  color: var(--xp-blue1);
+}
+
+.xp-btn svg,
+.submit-btn svg,
+.xp-file-label svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  vertical-align: middle;
+  color: inherit;
 }
 
 .xp-title-text {

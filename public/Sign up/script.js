@@ -30,12 +30,14 @@
       const cpwErr = document.getElementById('cpw-error');
 
       const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const pwValid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(pw);
+
       pseudoErr.classList.toggle('show', pseudo.length === 0);
       emailErr.classList.toggle('show', !emailValid);
-      pwErr.classList.toggle('show', pw.length === 0);
+      pwErr.classList.toggle('show', !pwValid);
       cpwErr.classList.toggle('show', pw !== cpw);
       
-      if (pseudo && emailValid && pw.length > 0 && pw === cpw) {
+      if (pseudo && emailValid && pwValid && pw === cpw) {
         loginBtn.textContent = 'Création du compte...';
         loginBtn.style.opacity = '0.8';
         
@@ -70,6 +72,15 @@
     });
     document.getElementById('password').addEventListener('input', () => {
       document.getElementById('pw-error').classList.remove('show');
+    });
+
+    // Enter key support
+    ['pseudo', 'email', 'password', 'password_Confirme'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          loginBtn.click();
+        }
+      });
     });
 
 

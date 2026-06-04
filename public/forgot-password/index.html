@@ -3,62 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Connexion | MNB</title>
+  <title>Récupération de compte | MNB</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
-    <link id="favicon" rel="icon" type="image/png" href="../../asset/favicon/256_frame1.png">
-
+  <link id="favicon" rel="icon" type="image/png" href="../../asset/favicon/256_frame1.png">
 </head>
 <body>
-
-
 
   <div class="card">
     <!-- Barre de titre XP -->
     <div class="xp-titlebar">
       <span class="title-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M93.17,122.83A71.68,71.68,0,0,1,88,95.91c0-38.58,31.08-70.64,69.64-71.87A72,72,0,0,1,232,98.36C230.73,136.92,198.67,168,160.09,168a71.68,71.68,0,0,1-26.92-5.17h0L120,176H96v24H72v24H40a8,8,0,0,1-8-8V187.31a8,8,0,0,1,2.34-5.65l58.83-58.83Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><circle cx="180" cy="76" r="12"/></svg></span>
-      <span class="xp-title-text">MNB — Connexion</span>
+      <span class="xp-title-text">MNB — Récupération de compte</span>
       <div class="xp-btns">
         <button class="xp-wbtn min">&#8722;</button>
         <button class="xp-wbtn max">&#9633;</button>
-        <button class="xp-wbtn close">&#10005;</button>
+        <button class="xp-wbtn close" onclick="window.location.href='../login/index.html'">&#10005;</button>
       </div>
     </div>
     <div class="card-body">
-    <!-- Left: Form -->
-    <div class="left">
-      <h1>Content de te revoir !</h1>
+      <!-- Left: Form -->
+      <div class="left">
+        <h1>Mot de passe oublié ?</h1>
+        <p class="instruction-text">Saisis ton adresse e-mail et nous t'enverrons un lien pour réinitialiser ton mot de passe.</p>
 
         <div class="field">
-        <label for="email">E-mail</label>
-        <div class="input-wrap">
+          <label for="email">E-mail</label>
+          <div class="input-wrap">
             <input type="email" id="email" placeholder="Saisis ton e-mail" autocomplete="email"/>
-        </div>
-        <span class="error-msg" id="email-error">Veuillez saisir une adresse e-mail valide.</span>
+          </div>
+          <span class="error-msg" id="email-error">Veuillez saisir une adresse e-mail valide.</span>
         </div>
 
         <div class="field">
-        <label for="password">Mot de passe</label>
-        <div class="input-wrap">
-            <input type="password" id="password" placeholder="Saisis ton mot de passe" autocomplete="current-password"/>
-            </div>
-        <span class="error-msg" id="pw-error">Le mot de passe ne peut pas être vide.</span>
+          <label for="new-password">Nouveau mot de passe</label>
+          <div class="input-wrap">
+            <input type="password" id="new-password" placeholder="Saisis ton nouveau mot de passe" />
+          </div>
+          <span class="error-msg" id="pw-error">Le mot de passe doit contenir 8 caractères minimum, une majuscule, une minuscule, un chiffre et un caractère spécial.</span>
         </div>
 
-        <a href="../forgot-password/index.html" class="forgot">Mot de passe oublié ?</a>
+        <button class="btn-primary" id="reset-btn" type="button">Réinitialiser le mot de passe</button>
 
-        <button class="btn-login" id="login-btn" type="button">Se connecter</button>
+        <p class="back-link"><a href="../login/index.html">Retour à la connexion</a></p>
+      </div>
 
-        <p class="signup-line">Pas encore de compte ? <a href="../Sign up/index.html">S'inscrire</a></p>
-    </div>
-
-    <!-- Right: Branding -->
-    <div class="right">
-      <!-- Wave divider: real wave rotated to act as a vertical separator -->
-      <div class="wave-divider">
+      <!-- Right: Branding -->
+      <div class="right">
+        <div class="wave-divider">
         <svg viewBox="0 0 200 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
           <!-- This is the original wave path transposed: x->y, y->x, scaled to 200x800 -->
           <path fill="white" d="
@@ -160,29 +155,23 @@
             L200,800 L200,0 Z"/>
         </svg>
       </div>
-      
-
-     <img src="msn_logo.png" alt="MSN Logo" class="msn-logo">
-      <p class="tagline">Restez en contact avec vos amis. Partagez des moments. Découvrez des communautés.</p>
-
-    </div>
-    
+        <img src="../login/msn_logo.png" alt="MSN Logo" class="msn-logo">
+        <p class="tagline">Ne vous inquiétez pas, on va vous aider à retrouver l'accès à votre compte.</p>
+      </div>
     </div>
   </div>
 
-  <!-- Modal d'erreur style XP -->
-  <div id="error-modal" class="xp-modal-overlay">
+  <!-- Modal de confirmation style XP -->
+  <div id="status-modal" class="xp-modal-overlay">
     <div class="xp-modal">
       <div class="xp-modal-titlebar">
-        <span class="xp-modal-title">MNB — Erreur de connexion</span>
+        <span class="xp-modal-title">MNB — Succès</span>
         <button class="xp-modal-close" onclick="closeModal()">&#10005;</button>
       </div>
       <div class="xp-modal-content">
         <div class="xp-modal-info">
-          <div class="modal-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="32" height="32"><rect width="256" height="256" fill="none"/><circle cx="128" cy="128" r="96" fill="#CC1A1A"/><line x1="88" y1="88" x2="168" y2="168" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><line x1="168" y1="88" x2="88" y2="168" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg>
-          </div>
-          <p id="modal-msg">L'adresse e-mail ou le mot de passe est incorrect.</p>
+          <svg class="success-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg>
+          <p id="modal-msg">Si ce compte existe, un e-mail a été envoyé.</p>
         </div>
         <div class="xp-modal-footer">
           <button class="xp-btn-ok" onclick="closeModal()">OK</button>

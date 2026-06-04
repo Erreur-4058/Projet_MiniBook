@@ -32,6 +32,12 @@ if (currentUser) {
 document.querySelector('.xp-wbtn.close').addEventListener('click', () => {
     window.location.href = '../feed/index.html';
 });
+document.querySelector('#pub-btn').addEventListener('click', () => {
+    window.location.href = '../feed/index.html';
+});
+document.querySelector('#help-btn').addEventListener('click', () => {
+    window.location.href = 'https://watchbutdonotlearn.github.io/';
+});
 
 // 5. Data Calculation
 function calculateStats() {
@@ -102,3 +108,13 @@ function renderActivityChart(posts) {
 
 // Initial calculation
 calculateStats();
+
+
+document.querySelectorAll('.xp-menu-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        const text = e.target.textContent;
+        if (text === 'Paramètres') window.location.href = '../setting/index.html';
+        else if (text === 'Statistiques') window.location.href = '../stat/index.html';
+        else if (text === 'Aide') alert('MiniBook v1.0 - Projet IHM\nUtilisez la zone de texte pour publier.');
+    });
+});
