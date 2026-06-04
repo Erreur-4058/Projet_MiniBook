@@ -1,3 +1,7 @@
+if (Storage.getLoggedInUser()) {
+    window.location.href = '../feed/index.html';
+}
+
 const frames = [
     "../../asset/favicon/256_frame1.png",
     "../../asset/favicon/256_frame2.png",

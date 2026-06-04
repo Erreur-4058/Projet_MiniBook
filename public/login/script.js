@@ -34,12 +34,18 @@
       pwErr.classList.toggle('show', pw.length === 0);
 
       if (emailValid && pw.length > 0) {
-        loginBtn.textContent = 'Signing in…';
+        loginBtn.textContent = 'Connexion...';
         loginBtn.style.opacity = '0.8';
+        
         setTimeout(() => {
-          loginBtn.textContent = 'Log in';
-          loginBtn.style.opacity = '1';
-        }, 2000);
+          if (Storage.login(email, pw)) {
+            window.location.href = '../feed/index.html';
+          } else {
+            alert('Email ou mot de passe incorrect.');
+            loginBtn.textContent = 'Se connecter';
+            loginBtn.style.opacity = '1';
+          }
+        }, 1000);
       }
     });
 
@@ -70,3 +76,7 @@ setInterval(() => {
     
     index = (index + 1) % frames.length;
 }, 200);
+
+document.querySelector('.xp-wbtn.close').addEventListener('click', () => {
+    window.location.href = '../home/index.html';
+});

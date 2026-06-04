@@ -1,76 +1,9 @@
-// Toggle password visibility
-    const pwInput = document.getElementById('password');
-    const slashLine = document.getElementById('slash-line');
-    let pwVisible = false;
 
+// 1. Auth check
+Storage.checkAuth();
+const currentUser = Storage.getLoggedInUser();
 
-    // Ripple effect on login button
-    const loginBtn = document.getElementById('login-btn');
-    loginBtn.addEventListener('click', function(e) {
-  
-      // Ripple
-      const rect = this.getBoundingClientRect();
-      const ripple = document.createElement('span');
-      ripple.className = 'ripple';
-      const size = Math.max(rect.width, rect.height);
-      ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px;`;
-      this.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 600);
-
-      // Validation
-      const pseudo = document.getElementById('pseudo').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const pw = document.getElementById('password').value.trim();
-      const cpw = document.getElementById('password_Confirme').value.trim();
-      
-      
-      const pseudoErr = document.getElementById('pseudo-error');
-      const emailErr = document.getElementById('email-error');
-      const pwErr = document.getElementById('pw-error');
-      const cpwErr = document.getElementById('cpw-error');
-
-      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      pseudoErr.classList.toggle('show', pseudo.length === 0);
-      emailErr.classList.toggle('show', !emailValid);
-      pwErr.classList.toggle('show', pw.length === 0);
-      cpwErr.classList.toggle('show', pw !== cpw);
-      
-      if (emailValid && pw.length > 0) {
-        loginBtn.textContent = 'Signing in…';
-        loginBtn.style.opacity = '0.8';
-        setTimeout(() => {
-          loginBtn.textContent = 'Log in';
-          loginBtn.style.opacity = '1';
-        }, 2000);
-      }
-    });
-
-    // Remove error on input
-    document.getElementById('email').addEventListener('input', () => {
-      document.getElementById('email-error').classList.remove('show');
-    });
-    document.getElementById('password').addEventListener('input', () => {
-      document.getElementById('pw-error').classList.remove('show');
-    });
-
-
-
-
-const fileInput = document.getElementById('profile-pic');
-const preview = document.getElementById('preview');
-
-fileInput.addEventListener('change', function() {
-  const file = this.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      preview.src = e.target.result;
-    }
-    reader.readAsDataURL(file);
-  }
-});
-
-
+// 2. Favicon Animation
 const frames = [
     "../../asset/favicon/256_frame1.png",
     "../../asset/favicon/256_frame2.png",
@@ -79,12 +12,68 @@ const frames = [
     "../../asset/favicon/256_frame5.png",
     "../../asset/favicon/256_frame6.png"
 ];
-
-let index = 0;
-
+let frameIndex = 0;
 setInterval(() => {
     const favicon = document.getElementById("favicon");
-    favicon.href = frames[index] + "?v=" + Date.now(); // évite le cache
-    
-    index = (index + 1) % frames.length;
+    if (favicon) {
+        favicon.href = frames[frameIndex] + "?v=" + Date.now();
+        frameIndex = (frameIndex + 1) % frames.length;
+    }
 }, 200);
+
+// 3. Populate fields
+if (currentUser) {
+    document.getElementById('pseudo').value = currentUser.pseudo || '';
+    document.getElementById('email').value = currentUser.email || '';
+    document.getElementById('preview').src = currentUser.avatar || 'https://www.w3schools.com/howto/img_avatar.png';
+}
+
+// 4. Avatar change
+document.getElementById('profile-pic').addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = e => document.getElementById('preview').src = e.target.result;
+        reader.readAsDataURL(file);
+    }
+});
+
+// 5. Actions
+document.getElementById('save-btn').addEventListener('click', () => {
+    const pseudo = document.getElementById('pseudo').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const avatar = document.getElementById('preview').src;
+    
+    // Simplification : on met à jour les infos de base
+    const users = Storage.getUsers();
+    const userIndex = users.findIndex(u => u.email === currentUser.email);
+    
+    if (userIndex !== -1) {
+        users[userIndex].pseudo = pseudo;
+        users[userIndex].email = email;
+        users[userIndex].avatar = avatar;
+        
+        localStorage.setItem(Storage.USERS, JSON.stringify(users));
+        localStorage.setItem(Storage.SESSION, JSON.stringify(users[userIndex]));
+        
+        alert('Paramètres enregistrés !');
+        window.location.href = '../feed/index.html';
+    }
+});
+
+document.getElementById('annu-btn').addEventListener('click', () => {
+    window.location.href = '../feed/index.html';
+});
+
+document.getElementById('sup-btn').addEventListener('click', () => {
+    if (confirm('Voulez-vous vraiment supprimer votre compte ? Cette action est irréversible.')) {
+        const users = Storage.getUsers().filter(u => u.email !== currentUser.email);
+        localStorage.setItem(Storage.USERS, JSON.stringify(users));
+        Storage.logout();
+    }
+});
+
+// Window close
+document.querySelector('.xp-wbtn.close').addEventListener('click', () => {
+    window.location.href = '../feed/index.html';
+});

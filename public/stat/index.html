@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Statistiques | MNB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link id="favicon" rel="icon" type="image/png" href="../../asset/favicon/256_frame1.png">
+</head>
+
+<body>
+
+  <div class="xp-window">
+
+    <div class="xp-titlebar">
+      <span class="title-icon">📊</span>
+      <span class="xp-title-text">MNB — Statistiques d'activité</span>
+      <div class="xp-btns">
+        <div class="xp-wbtn min">─</div>
+        <div class="xp-wbtn max">▢</div>
+        <div class="xp-wbtn close" title="Retour au feed">✕</div>
+      </div>
+    </div>
+
+    <div class="xp-menubar">
+      <span class="xp-menu-item">Fichier</span>
+      <span class="xp-menu-item">Afficher</span>
+      <span class="xp-menu-item">Aide</span>
+    </div>
+
+    <div class="xp-content">
+      <div class="stat-container">
+
+        <div class="stat-summary">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="50" height="50">
+                <rect width="256" height="256" fill="none" />
+                <polyline points="224 56 128 144 32 56" fill="none" stroke="currentColor" stroke-linecap="round"
+                  stroke-linejoin="round" stroke-width="16" />
+                <path d="M32,56H224a0,0,0,0,1,0,0V192a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V56A0,0,0,0,1,32,56Z" fill="none"
+                  stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+                <line x1="110.55" y1="128" x2="34.47" y2="197.74" fill="none" stroke="currentColor"
+                  stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+                <line x1="221.53" y1="197.74" x2="145.45" y2="128" fill="none" stroke="currentColor"
+                  stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value" id="count-posts">0</div>
+              <div class="stat-label">Publications</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">❤️</div>
+            <div class="stat-info">
+              <div class="stat-value" id="count-likes">0</div>
+              <div class="stat-label">Likes reçus</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <div class="stat-value" id="count-followers">0</div>
+              <div class="stat-label">Abonnés</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="xp-group">
+          <div class="xp-group-title">Histogramme de l'activité (7 derniers jours)</div>
+          <div class="chart-area" id="activity-chart">
+            <div class="chart-y-axis">
+              <span>10</span>
+              <span>5</span>
+              <span>0</span>
+            </div>
+            <div class="chart-bars" id="bars-container"></div>
+          </div>
+          <div class="chart-labels" id="labels-container"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SIDEBAR RAJOUTÉE POUR LE STYLE -->
+    <div class="xp-sidebar-par">
+      <div class="sidebar-user">
+        <div class="msn-avatar-container">
+          <img class="picture" id="stat-avatar-pic" src="../feed/tux.jpg" alt="Avatar">
+        </div>
+        <div class="sidebar-username" id="stat-username-text">Utilisateur</div>
+        <div class="sidebar-status">
+          <div class="status-dot"></div>
+          <span>Mode Statistique</span>
+        </div>
+      </div>
+      <div class="xp-sidebar">
+        <div class="sidebar-section">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-statusbar">
+      <span>📊 Analyse des données terminée</span>
+      <div class="divider"></div>
+      <span id="user-display">Utilisateur : ...</span>
+    </div>
+
+  </div>
+
+  <script src="../utils.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
