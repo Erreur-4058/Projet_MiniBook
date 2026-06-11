@@ -48,6 +48,12 @@ document.querySelector('.xp-wbtn.close').addEventListener('click', () => {
     setTimeout(() => Storage.logout(), 2000);
 });
 
+document.querySelector('.down').addEventListener('click',() => {
+    const errorSound = new Audio('../../asset/sond/son_1.mp3');
+    errorSound.play().catch(() => Storage.logout()); // If sound fails, logout immediately  
+});
+
+
 // 5. Menu Navigation
 document.querySelectorAll('.xp-menu-item').forEach(item => {
     item.addEventListener('click', (e) => {
