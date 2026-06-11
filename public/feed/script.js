@@ -210,4 +210,182 @@ function addPost() {
 // Initial render
 renderPosts();
 
+// ---------------------------------------------------------
+// CLIPPY & MEME POPUP TROLLING LOGIC
+// ---------------------------------------------------------
+
+const MEMES = [
+    "48522.gif",
+    "80830819_p.gif",
+    "SonicOldCondensed.gif",
+    "bongocatsolana-bongosolana.gif",
+    "game-glitch-legs.gif",
+    "giphy.gif",
+    "linux-unix.gif",
+    "patrick-star-patrick.gif",
+    "tK6IrC9.gif",
+    "tenor.gif",
+    "tenor1.gif",
+    "tenor3.gif",
+    "tenor4.gif",
+    "tenor5.gif",
+    "tenor6.gif",
+    "tenor7.gif",
+    "tetris-t-spin.gif",
+    "tumblr_lvy9ec3YfC1qizbpto1_1280.gif",
+    "tumblr_m2obltzJs01r880jmo1_500.gif",
+    "tumblr_m6nbf0VOWz1r880jmo1_1280.gif",
+    "tumblr_mbtaizX63j1rqd7tno1_r1_500.gif",
+    "tumblr_mxmmu6f15z1r880jmo1_500.gif",
+    "tux-linux.gif"
+];
+
+const ANNOYING_PHRASES = [
+    "Besoin d'aide pour cliquer ?",
+    "T'as vu ce meme ? Il est collector.",
+    "Arrête de scroller, tu vas user ta souris !",
+    "C'est quoi ce post ? Pas terrible...",
+    "Je m'ennuie... On joue à quoi ?",
+    "Attention ! Un virus imaginaire a été détecté !",
+    "Tu lis vraiment tout le feed ?",
+    "Regarde ce que j'ai trouvé dans ton bureau !",
+    "Clippy est dans la place !",
+    "Tu veux que je rédige ton prochain post ?",
+    "Oops ! J'ai glissé sur un pixel.",
+    "C'est pas un peu nul ce que tu fais ?"
+];
+
+let clippyAgent = null;
+
+async function setupClippy() {
+    // Small retry mechanism just in case
+    let attempts = 0;
+    while (!window.initClippy && attempts < 10) {
+        console.log("Waiting for Clippy...");
+        await new Promise(r => setTimeout(r, 500));
+        attempts++;
+    }
+
+    if (window.initClippy) {
+        console.log("Initializing Clippy...");
+        clippyAgent = await window.initClippy();
+        clippyAgent.speak("Salut ! Je suis Clippy, je vais t'embêter un peu !");
+        clippyAgent.animate();
+
+        // Spawn one immediately for testing
+        setTimeout(spawnMeme, 2000);
+        
+        // Random behavior interval
+        setInterval(() => {
+            // Increased frequency for better trolling
+            if (Math.random() > 0.4) {
+                const phrase = ANNOYING_PHRASES[Math.floor(Math.random() * ANNOYING_PHRASES.length)];
+                clippyAgent.speak(phrase);
+                
+                // 70% chance to spawn a meme when speaking
+                if (Math.random() > 0.3) {
+                    spawnMeme();
+                }
+                
+                // Random animation
+                clippyAgent.animate();
+                
+                // Move to random position
+                const x = Math.random() * (window.innerWidth - 150);
+                const y = Math.random() * (window.innerHeight - 150);
+                clippyAgent.moveTo(x, y);
+            }
+        }, 8000); // Check every 8 seconds
+
+        // Interaction triggers
+        window.addEventListener('scroll', () => {
+            if (Math.random() > 0.98) {
+                clippyAgent.speak("Doucement sur le scroll !");
+            }
+        });
+
+        document.addEventListener('click', () => {
+            if (Math.random() > 0.95) {
+                clippyAgent.speak("T'as cliqué où là ?");
+                clippyAgent.play('Searching');
+            }
+        });
+    }
+}
+
+function spawnMeme() {
+    console.log("Spawning a meme popup...");
+    
+    // Play sound
+    const popSound = new Audio('../../asset/sond/pop.mp3');
+    popSound.play().catch(e => console.log("Audio play blocked or failed:", e));
+
+    const memeName = MEMES[Math.floor(Math.random() * MEMES.length)];
+    const memePath = `../../asset/meme/${memeName}`;
+    
+    const popup = document.createElement('div');
+    popup.className = 'meme-popup';
+    
+    // Ensure dimensions for visibility even if image loads slowly
+    popup.style.width = '270px';
+    popup.style.minHeight = '150px';
+    
+    // Random position within visible range
+    const maxX = Math.max(0, window.innerWidth - 300);
+    const maxY = Math.max(0, window.innerHeight - 300);
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+    popup.style.left = `${x}px`;
+    popup.style.top = `${y}px`;
+    
+    popup.innerHTML = `
+        <div class="meme-popup-title" style="cursor: move;">
+            <span style="pointer-events: none;">Internet Explorer - Surprise !</span>
+            <div class="meme-popup-close">✕</div>
+        </div>
+        <div class="meme-popup-content">
+            <img class="meme-popup-img" src="${memePath}" alt="meme" style="width: 100%; height: auto;">
+        </div>
+    `;
+    
+    document.body.appendChild(popup);
+    
+    const closeBtn = popup.querySelector('.meme-popup-close');
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        popup.remove();
+        if (clippyAgent) {
+            clippyAgent.speak("Dommage, il était sympa celui-là !");
+        }
+    });
+
+    // Make it draggable (basic version)
+    let isDragging = false;
+    let offset = [0, 0];
+    
+    popup.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offset = [
+            popup.offsetLeft - e.clientX,
+            popup.offsetTop - e.clientY
+        ];
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            popup.style.left = (e.clientX + offset[0]) + 'px';
+            popup.style.top = (e.clientY + offset[1]) + 'px';
+        }
+    });
+
+    // Auto-remove after some time if not closed? No, keep it to annoy.
+}
+
+// Start the madness
+setupClippy();
+
 

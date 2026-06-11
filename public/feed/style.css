@@ -793,3 +793,59 @@ svg {
   top: 4px;
   right: -9px;
 }
+
+/* Meme Popup */
+.meme-popup {
+  position: fixed;
+  z-index: 9999;
+  background: #ECE9D8;
+  border: 1px solid #003C74;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+  animation: popupIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  user-select: none;
+  cursor: move;
+}
+
+@keyframes popupIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.meme-popup-title {
+  background: linear-gradient(180deg, #2F7FD0 0%, #1155BB 45%, #0C3C98 100%);
+  color: white;
+  padding: 3px 6px;
+  font-family: 'Tahoma', sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meme-popup-close {
+  background: linear-gradient(180deg, #FF5C5C 0%, #CC1A1A 100%);
+  width: 16px;
+  height: 16px;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  color: white;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.meme-popup-content {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.meme-popup-img {
+  max-width: 250px;
+  max-height: 250px;
+  display: block;
+}
