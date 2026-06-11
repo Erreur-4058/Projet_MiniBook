@@ -215,14 +215,34 @@ renderPosts();
 // ---------------------------------------------------------
 
 const MEMES = [
+    "200.gif",
+    "200w.gif",
+    "202ba994a368d5cea1f90c0cfc9c0ba6.gif",
+    "224297.gif",
     "48522.gif",
+    "5a9a4b1432da8dff1d2cf2e17d5a81d1.gif",
     "80830819_p.gif",
+    "812a2292f3667550def1a5ef77fb138e.gif",
     "SonicOldCondensed.gif",
+    "TSHofY.gif",
+    "a021d7d1c9c83486f22fb3579ff07780.gif",
     "bongocatsolana-bongosolana.gif",
+    "bosnov-67.gif",
+    "cat-67.gif",
+    "cat-oiiaoiia-cat.gif",
+    "dragon-dance-memw-dragon-dance-meme.gif",
+    "fe3b41ff75f4e1e73d48ae338fbc80b2.gif",
     "game-glitch-legs.gif",
     "giphy.gif",
+    "giphy1.gif",
+    "giphy2.gif",
+    "hate-this.gif",
     "linux-unix.gif",
+    "lizard-lizard-lizard-button.gif",
+    "nub-nub-cat.gif",
     "patrick-star-patrick.gif",
+    "rTZkf4K.gif",
+    "rat-dancing-meme.gif",
     "tK6IrC9.gif",
     "tenor.gif",
     "tenor1.gif",
@@ -237,7 +257,8 @@ const MEMES = [
     "tumblr_m6nbf0VOWz1r880jmo1_1280.gif",
     "tumblr_mbtaizX63j1rqd7tno1_r1_500.gif",
     "tumblr_mxmmu6f15z1r880jmo1_500.gif",
-    "tux-linux.gif"
+    "tux-linux.gif",
+    "waving-joy.gif"
 ];
 
 const ANNOYING_PHRASES = [
