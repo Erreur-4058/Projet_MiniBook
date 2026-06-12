@@ -97,15 +97,19 @@ function createPostElement(post) {
     const isOwner = post.authorEmail === currentUser.email;
     const isLiked = post.likedBy && post.likedBy.includes(currentUser.email);
 
+    const author = Storage.getUserInfo(post.authorEmail);
+    const authorName = author.pseudo || 'Utilisateur';
+    const authorAvatar = author.avatar || 'https://www.w3schools.com/howto/img_avatar.png';
+
     div.innerHTML = `
         ${post.image ? `<img class="post-image" src="${post.image}" alt=""/>` : ''}
         <div class="post-body">
             <div class="post-header">
                 <div class="xp-avatar">
-                   <img src="${post.authorAvatar}" style="width:100%; height:100%; border-radius:3px;">
+                   <img src="${authorAvatar}" style="width:100%; height:100%; border-radius:3px;">
                 </div>
                 <div class="post-meta">
-                    <div class="post-author">${post.authorName}</div>
+                    <div class="post-author">${authorName}</div>
                     <div class="post-time">${new Date(post.timestamp).toLocaleString()}</div>
                 </div>
             </div>
@@ -187,14 +191,14 @@ function previewFile(input) {
     }
 }
 
-function addPost() {
+async function addPost() {
     const msg = document.getElementById('msg-input').value.trim();
     const mini = document.getElementById('preview-mini');
     const image = mini.style.display !== 'none' ? mini.src : null;
 
     if (!msg && !image) return;
 
-    const newPost = Storage.addPost(msg, image);
+    const newPost = await Storage.addPost(msg, image);
     if (newPost) {
         // Reset fields
         document.getElementById('msg-input').value = '';
@@ -258,7 +262,8 @@ const MEMES = [
     "tumblr_mbtaizX63j1rqd7tno1_r1_500.gif",
     "tumblr_mxmmu6f15z1r880jmo1_500.gif",
     "tux-linux.gif",
-    "waving-joy.gif"
+    "waving-joy.gif",
+    "frank-leboeuf-salut-c'est-frank-leboeuf.gif"
 ];
 
 const ANNOYING_PHRASES = [

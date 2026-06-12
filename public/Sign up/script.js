@@ -6,7 +6,7 @@
 
     // Ripple effect on login button
     const loginBtn = document.getElementById('login-btn');
-    loginBtn.addEventListener('click', function(e) {
+    loginBtn.addEventListener('click', async function(e) {
   
       // Ripple
       const rect = this.getBoundingClientRect();
@@ -22,7 +22,6 @@
       const email = document.getElementById('email').value.trim();
       const pw = document.getElementById('password').value.trim();
       const cpw = document.getElementById('password_Confirme').value.trim();
-      
       
       const pseudoErr = document.getElementById('pseudo-error');
       const emailErr = document.getElementById('email-error');
@@ -44,11 +43,17 @@
         // Get avatar from preview
         const avatar = document.getElementById('preview').src;
 
+        // Resize avatar
+        let processedAvatar = avatar;
+        if (avatar && avatar.startsWith('data:image')) {
+            processedAvatar = await Storage.resizeImage(avatar, 200, 200);
+        }
+
         const newUser = {
           pseudo: pseudo,
           email: email,
           password: pw,
-          avatar: avatar
+          avatar: processedAvatar
         };
 
         setTimeout(() => {

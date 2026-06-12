@@ -49,7 +49,7 @@ document.getElementById('profile-pic').addEventListener('change', function() {
 });
 
 // 5. Actions
-document.getElementById('save-btn').addEventListener('click', () => {
+document.getElementById('save-btn').addEventListener('click', async () => {
     const pseudoInput = document.getElementById('pseudo');
     const emailInput = document.getElementById('email');
     const oldPwInput = document.getElementById('old-password');
@@ -118,17 +118,28 @@ document.getElementById('save-btn').addEventListener('click', () => {
     const userIndex = users.findIndex(u => u.email === currentUser.email);
     
     if (userIndex !== -1) {
+        // Resize avatar if it's new
+        let processedAvatar = avatar;
+        if (avatar && avatar.startsWith('data:image')) {
+            processedAvatar = await Storage.resizeImage(avatar, 200, 200); // Avatars are small
+        }
+
         users[userIndex].pseudo = pseudo;
         users[userIndex].email = email;
-        users[userIndex].avatar = avatar;
+        users[userIndex].avatar = processedAvatar;
         
         // Update password if a new one was provided
         if (newPw !== "") {
             users[userIndex].password = newPw;
         }
         
-        localStorage.setItem(Storage.USERS, JSON.stringify(users));
-        localStorage.setItem(Storage.SESSION, JSON.stringify(users[userIndex]));
+        try {
+            localStorage.setItem(Storage.USERS, JSON.stringify(users));
+            localStorage.setItem(Storage.SESSION, JSON.stringify(users[userIndex]));
+        } catch (e) {
+            alert("Erreur: Mémoire saturée. Impossible de sauvegarder les modifications.");
+            return;
+        }
         
         // Optional: show a small success indication or just redirect
         window.location.href = '../feed/index.html';

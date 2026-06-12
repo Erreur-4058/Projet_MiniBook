@@ -26,6 +26,11 @@ const Storage = {
         return { success: true };
     },
 
+    getUserInfo(email) {
+        const users = this.getUsers();
+        return users.find(u => u.email === email) || { pseudo: 'Utilisateur inconnu', avatar: 'https://www.w3schools.com/howto/img_avatar.png' };
+    },
+
     // --- SESSION ---
     login(email, password) {
         const users = this.getUsers();
@@ -73,24 +78,35 @@ const Storage = {
         }
     },
 
-    addPost(text, image = null) {
+    async addPost(text, image = null) {
         const user = this.getLoggedInUser();
         if (!user) return null;
+
+        let processedImage = image;
+        if (image && image.startsWith('data:image')) {
+            processedImage = await this.resizeImage(image);
+        }
 
         const posts = this.getPosts();
         const newPost = {
             id: 'post-' + Date.now(),
             authorEmail: user.email,
-            authorName: user.pseudo || (user.firstName + ' ' + user.lastName),
-            authorAvatar: user.avatar || 'https://www.w3schools.com/howto/img_avatar.png',
+            // We no longer store authorName and authorAvatar here to save space
+            // They will be looked up at runtime
             text: text,
-            image: image,
+            image: processedImage,
             likes: 0,
-            likedBy: [], // Array of emails who liked
+            likedBy: [], 
             timestamp: new Date().toISOString()
         };
         posts.unshift(newPost);
-        localStorage.setItem(this.POSTS, JSON.stringify(posts));
+        try {
+            localStorage.setItem(this.POSTS, JSON.stringify(posts));
+        } catch (e) {
+            console.error("Storage full!", e);
+            alert("Erreur: Mémoire saturée. Veuillez supprimer d'anciens posts.");
+            return null;
+        }
         return newPost;
     },
 
@@ -169,6 +185,38 @@ const Storage = {
             if (aFollowed && !bFollowed) return -1;
             if (!aFollowed && bFollowed) return 1;
             return 0; // Garde l'ordre chronologique si même statut
+        });
+    },
+
+    // --- UTILS ---
+    resizeImage(base64Str, maxWidth = 800, maxHeight = 600) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.src = base64Str;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height *= maxWidth / width;
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width *= maxHeight / height;
+                        height = maxHeight;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                resolve(canvas.toDataURL('image/jpeg', 0.7)); // Compress to JPEG with 0.7 quality
+            };
+            img.onerror = () => resolve(base64Str); // Fallback
         });
     }
 };
