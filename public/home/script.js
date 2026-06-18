@@ -1,3 +1,4 @@
+// si le ga est déja co on l'envoi sur le feed
 if (Storage.getLoggedInUser()) {
     window.location.href = '../feed/index.html';
 }

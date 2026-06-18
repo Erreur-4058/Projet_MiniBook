@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Récupération de compte | MNB</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
   <link id="favicon" rel="icon" type="image/png" href="../../asset/favicon/256_frame1.png">
 </head>
+
 <body>
 
   <div class="card">
     <div class="xp-titlebar">
-      <span class="title-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M93.17,122.83A71.68,71.68,0,0,1,88,95.91c0-38.58,31.08-70.64,69.64-71.87A72,72,0,0,1,232,98.36C230.73,136.92,198.67,168,160.09,168a71.68,71.68,0,0,1-26.92-5.17h0L120,176H96v24H72v24H40a8,8,0,0,1-8-8V187.31a8,8,0,0,1,2.34-5.65l58.83-58.83Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><circle cx="180" cy="76" r="12"/></svg></span>
+      <span class="title-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+          <rect width="256" height="256" fill="none" />
+          <path
+            d="M93.17,122.83A71.68,71.68,0,0,1,88,95.91c0-38.58,31.08-70.64,69.64-71.87A72,72,0,0,1,232,98.36C230.73,136.92,198.67,168,160.09,168a71.68,71.68,0,0,1-26.92-5.17h0L120,176H96v24H72v24H40a8,8,0,0,1-8-8V187.31a8,8,0,0,1,2.34-5.65l58.83-58.83Z"
+            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+          <circle cx="180" cy="76" r="12" />
+        </svg></span>
       <span class="xp-title-text">MNB — Récupération de compte</span>
       <div class="xp-btns">
         <button class="xp-wbtn min">&#8722;</button>
@@ -26,12 +34,13 @@
     <div class="card-body">
       <div class="left">
         <h1>Mot de passe oublié ?</h1>
-        <p class="instruction-text">Saisis ton adresse e-mail et nous t'enverrons un lien pour réinitialiser ton mot de passe.</p>
+        <p class="instruction-text">Saisis ton adresse e-mail et nous t'enverrons un lien pour réinitialiser ton mot de
+          passe.</p>
 
         <div class="field">
           <label for="email">E-mail</label>
           <div class="input-wrap">
-            <input type="email" id="email" placeholder="Saisis ton e-mail" autocomplete="email"/>
+            <input type="email" id="email" placeholder="Saisis ton e-mail" autocomplete="email" />
           </div>
           <span class="error-msg" id="email-error">Veuillez saisir une adresse e-mail valide.</span>
         </div>
@@ -41,7 +50,8 @@
           <div class="input-wrap">
             <input type="password" id="new-password" placeholder="Saisis ton nouveau mot de passe" />
           </div>
-          <span class="error-msg" id="pw-error">Le mot de passe doit contenir 8 caractères minimum, une majuscule, une minuscule, un chiffre et un caractère spécial.</span>
+          <span class="error-msg" id="pw-error">Le mot de passe doit contenir 8 caractères minimum, une majuscule, une
+            minuscule, un chiffre et un caractère spécial.</span>
         </div>
 
         <button class="btn-primary" id="reset-btn" type="button">Réinitialiser le mot de passe</button>
@@ -51,8 +61,9 @@
 
       <div class="right">
         <div class="wave-divider">
-        <svg viewBox="0 0 200 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-          <path fill="white" d="
+          <svg viewBox="0 0 200 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+            style="width:100%;height:100%;">
+            <path fill="white" d="
             M100,0
             C100,0 100.33,1 100.66,2 100.99,3 101.32,4 101.66,5 101.99,6 102.32,7 102.65,8 102.98,9 103.31,10
             103.65,11 103.98,12 104.31,13 104.64,14 104.97,15 105.30,16 105.63,17 105.96,18 106.29,19
@@ -148,9 +159,9 @@
             66.81,778 67.05,779 67.29,780 67.53,781 67.77,782 68.01,783 68.25,784 68.50,785 68.75,786
             69.00,787 69.25,788 69.50,789 69.75,790 70.01,791 70.26,792 70.52,793 70.78,794 71.04,795
             71.31,796 71.57,797 71.83,798 72.10,799 72.37,800
-            L200,800 L200,0 Z"/>
-        </svg>
-      </div>
+            L200,800 L200,0 Z" />
+          </svg>
+        </div>
         <img src="../login/msn_logo.png" alt="MSN Logo" class="msn-logo">
         <p class="tagline">Ne vous inquiétez pas, on va vous aider à retrouver l'accès à votre compte.</p>
       </div>
@@ -165,7 +176,9 @@
       </div>
       <div class="xp-modal-content">
         <div class="xp-modal-info">
-          <svg class="success-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg>
+          <svg class="success-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z" />
+          </svg>
           <p id="modal-msg">Si ce compte existe, un e-mail a été envoyé.</p>
         </div>
         <div class="xp-modal-footer">
@@ -178,4 +191,5 @@
   <script src="../utils.js"></script>
   <script src="./script.js"></script>
 </body>
+
 </html>

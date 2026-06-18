@@ -4,6 +4,7 @@
     let pwVisible = false;
 
    
+    // ca s'est pour le bonton de login
     const loginBtn = document.getElementById('login-btn');
     loginBtn.addEventListener('click', function(e) {
       
@@ -20,6 +21,7 @@
       const emailErr = document.getElementById('email-error');
       const pwErr = document.getElementById('pw-error');
 
+      // verif si le mail est bon sinon error
       const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       emailErr.classList.toggle('show', !emailValid);
       pwErr.classList.toggle('show', pw.length === 0);
@@ -30,6 +32,7 @@
         
         setTimeout(() => {
           if (Storage.login(email, pw)) {
+            // si c'est ok on redirige l'utulisateur
             window.location.href = '../feed/index.html';
           } else {
             showModal();
@@ -55,6 +58,7 @@
       });
     });
 
+    // fction pour montré l'erreur windows xp
     function showModal() {
         const modal = document.getElementById('error-modal');
             const errorSound = new Audio('../../asset/sond/Windows XP Arrêt critique.wav');

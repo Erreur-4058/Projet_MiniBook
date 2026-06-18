@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById('modal-msg').innerText = "Ton mot de passe a été réinitialisé avec succès !";
             showModal();
-            
+
             resetBtn.disabled = false;
             resetBtn.innerText = 'Réinitialiser le mot de passe';
             emailInput.value = '';

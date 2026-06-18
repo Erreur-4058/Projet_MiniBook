@@ -1,4 +1,5 @@
 
+// verif si le gars est co
 Storage.checkAuth();
 const currentUser = Storage.getLoggedInUser();
 
@@ -10,6 +11,7 @@ const frames = [
     "../../asset/favicon/256_frame5.png",
     "../../asset/favicon/256_frame6.png"
 ];
+// ca change le faviccon tt le temp
 let frameIndex = 0;
 setInterval(() => {
     const favicon = document.getElementById("favicon");
@@ -22,9 +24,10 @@ setInterval(() => {
 if (currentUser) {
     document.getElementById('avatar-picture').src = currentUser.avatar || 'tux.jpg';
     document.querySelector('.sidebar-username').textContent = currentUser.pseudo;
-    
+
     const playLoginSound = () => {
         const sound = new Audio('../../asset/sond/Windows XP Ouverture de session.wav');
+        // jjoue le song de windows xp mdr
         sound.play().catch(e => console.log("L'audio n'a pas pu être lancé :", e));
         document.removeEventListener('click', playLoginSound);
         document.removeEventListener('keydown', playLoginSound);
@@ -35,16 +38,16 @@ if (currentUser) {
 
 document.querySelector('.xp-wbtn.close').addEventListener('click', () => {
     const errorSound = new Audio('../../asset/sond/Windows XP Fermeture de session.wav');
-    errorSound.play().catch(() => Storage.logout()); 
+    errorSound.play().catch(() => Storage.logout());
     errorSound.onended = () => {
         Storage.logout();
     };
     setTimeout(() => Storage.logout(), 2000);
 });
 
-document.querySelector('.down').addEventListener('click',() => {
+document.querySelector('.down').addEventListener('click', () => {
     const errorSound = new Audio('../../asset/sond/son_1.mp3');
-    errorSound.play().catch(() => Storage.logout()); 
+    errorSound.play().catch(() => Storage.logout());
 });
 
 
@@ -68,6 +71,7 @@ document.getElementById('help-ok-btn').addEventListener('click', () => {
     document.getElementById('help-modal').classList.remove('visible');
 });
 
+// pour aficher lé poste sur le mur
 function renderPosts() {
     const feed = document.getElementById('feed');
     const posts = Storage.getPrioritizedPosts();
@@ -142,6 +146,7 @@ function handleLike(postId) {
 
 let postToDelete = null;
 
+// kan on veu suprimé un truc
 function handleDelete(postId) {
     postToDelete = postId;
     const errorSound = new Audio('../../asset/sond/Windows XP Arrêt critique.wav');
@@ -183,6 +188,7 @@ function updateCount() {
     document.getElementById('post-count').textContent = n + ' publication' + (n > 1 ? 's' : '');
 }
 
+// pour voir l'image avan de posté
 function previewFile(input) {
     const name = input.files[0]?.name || 'Aucun fichier';
     document.getElementById('file-name').textContent = name;
@@ -285,6 +291,7 @@ const ANNOYING_PHRASES = [
 
 let clippyAgent = null;
 
+// met clippy en place car c marrant
 async function setupClippy() {
     let attempts = 0;
     while (!window.initClippy && attempts < 10) {
@@ -300,18 +307,35 @@ async function setupClippy() {
         clippyAgent.animate();
 
         setTimeout(spawnMeme, 2000);
-        
+
         setInterval(() => {
             if (Math.random() > 0.4) {
                 const phrase = ANNOYING_PHRASES[Math.floor(Math.random() * ANNOYING_PHRASES.length)];
                 clippyAgent.speak(phrase);
-                
+
                 if (Math.random() > 0.3) {
-                    spawnMeme();
+                    let nyancat = Math.random() * 100;
+                    let nyancat_tipe;
+                    if (nyancat < 0.2) {
+                                nyancat_tipe = "3d52e5d3f5b1fbf71b353fbc78b8f890.gif"; // 0,2% de chance
+                            } else if (nyancat < 2.2) { 
+                                nyancat_tipe = "nyan_dor.gif"; // 2% (de 0.2 à 2.2)
+                            } else if (nyancat < 12.2) {
+                                nyancat_tipe = "d543dze-0bdd9126-3720-4c84-b1ee-243b0027a125.gif"; // 10% (de 2.2 à 12.2)
+                            } else if (nyancat < 32.2) {
+                                nyancat_tipe = "Nyan_cat_chinese_gif_by_lookincool45-d53yhiw.gif"; // 20% (de 12.2 à 32.2)
+                            } else if (nyancat < 62.2) {
+                                nyancat_tipe = "mexico.gif"; // 30% (de 32.2 à 62.2)
+                            } else {
+                                nyancat_tipe = "poptart1redrainbowfix_1.gif"; // Le reste (37,8%)
+                            }
+
+
+                   
                 }
-                
+
                 clippyAgent.animate();
-                
+
                 const x = Math.random() * (window.innerWidth - 150);
                 const y = Math.random() * (window.innerHeight - 150);
                 clippyAgent.moveTo(x, y);
@@ -333,28 +357,34 @@ async function setupClippy() {
     }
 }
 
+// fait apparaitre un meme au pif
 function spawnMeme() {
     console.log("Spawning a meme popup...");
-    
+
     const popSound = new Audio('../../asset/sond/pop.mp3');
     popSound.play().catch(e => console.log("Audio play blocked or failed:", e));
 
     const memeName = MEMES[Math.floor(Math.random() * MEMES.length)];
-    const memePath = `../../asset/meme/${memeName}`;
-    
+    if (memeName=="nyancat") {
+        Math.random()
+    }
+    else {
+        const memePath = `../../asset/meme/${memeName}`;
+    }
+
     const popup = document.createElement('div');
     popup.className = 'meme-popup';
-    
+
     popup.style.width = '270px';
     popup.style.minHeight = '150px';
-    
+
     const maxX = Math.max(0, window.innerWidth - 300);
     const maxY = Math.max(0, window.innerHeight - 300);
     const x = Math.random() * maxX;
     const y = Math.random() * maxY;
     popup.style.left = `${x}px`;
     popup.style.top = `${y}px`;
-    
+
     popup.innerHTML = `
         <div class="meme-popup-title" style="cursor: move;">
             <span style="pointer-events: none;">Internet Explorer - Surprise !</span>
@@ -364,9 +394,9 @@ function spawnMeme() {
             <img class="meme-popup-img" src="${memePath}" alt="meme" style="width: 100%; height: auto;">
         </div>
     `;
-    
+
     document.body.appendChild(popup);
-    
+
     const closeBtn = popup.querySelector('.meme-popup-close');
     closeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -378,7 +408,7 @@ function spawnMeme() {
 
     let isDragging = false;
     let offset = [0, 0];
-    
+
     popup.addEventListener('mousedown', (e) => {
         isDragging = true;
         offset = [

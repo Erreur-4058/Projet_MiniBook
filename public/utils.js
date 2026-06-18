@@ -4,6 +4,7 @@ const Storage = {
     SESSION: 'mnb_session',
 
     getUsers() {
+        // ici on récupere tout les utulisateurs
         try {
             return JSON.parse(localStorage.getItem(this.USERS)) || [];
         } catch (e) {
@@ -12,6 +13,7 @@ const Storage = {
     },
 
     saveUser(user) {
+        // sauvegarde d'un nouvau gars qui vien de s'incrire
         const users = this.getUsers();
         if (users.some(u => u.email === user.email)) {
             return { success: false, message: 'Cet e-mail est déjà utilisé.' };
@@ -37,6 +39,7 @@ const Storage = {
     },
 
     logout() {
+        // deconnexion du ga
         localStorage.removeItem(this.SESSION);
         window.location.href = '../login/index.html';
     },
@@ -52,6 +55,7 @@ const Storage = {
     },
 
     checkAuth() {
+        // vérif si le mek a le droit d'etre la
         if (!this.getLoggedInUser()) {
             const path = window.location.pathname;
             if (!path.includes('login') && !path.includes('Sign%20up') && !path.includes('home')) {
@@ -84,7 +88,7 @@ const Storage = {
             text: text,
             image: processedImage,
             likes: 0,
-            likedBy: [], 
+            likedBy: [],
             timestamp: new Date().toISOString()
         };
         posts.unshift(newPost);
@@ -151,7 +155,7 @@ const Storage = {
             }
 
             localStorage.setItem(this.USERS, JSON.stringify(users));
-            localStorage.setItem(this.SESSION, JSON.stringify(me)); 
+            localStorage.setItem(this.SESSION, JSON.stringify(me));
             return me;
         }
         return null;
@@ -167,11 +171,12 @@ const Storage = {
             const bFollowed = user.following.includes(b.authorEmail);
             if (aFollowed && !bFollowed) return -1;
             if (!aFollowed && bFollowed) return 1;
-            return 0; 
+            return 0;
         });
     },
 
     resizeImage(base64Str, maxWidth = 800, maxHeight = 600) {
+        // pour rezize les image car sinon c tro lour
         return new Promise((resolve) => {
             const img = new Image();
             img.src = base64Str;
@@ -196,9 +201,9 @@ const Storage = {
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-                resolve(canvas.toDataURL('image/jpeg', 0.7)); 
+                resolve(canvas.toDataURL('image/jpeg', 0.7));
             };
-            img.onerror = () => resolve(base64Str); 
+            img.onerror = () => resolve(base64Str);
         });
     }
 };
