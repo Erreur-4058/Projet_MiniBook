@@ -113,7 +113,10 @@ body {
 
 /* --- STATS SPECIFIC --- */
 .stat-container { display: flex; flex-direction: column; gap: 20px; }
-.stat-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (min-width: 600px) {
+  .stat-summary { grid-template-columns: repeat(4, 1fr); }
+}
 
 .stat-card {
   background: white;
@@ -209,3 +212,35 @@ body {
   margin-right: 4px;
 }
 .divider { width: 1px; height: 14px; background: #A0A0A0; margin: 0 10px; }
+
+/* --- MODAL --- */
+.xp-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4); display: none;
+    align-items: center; justify-content: center; z-index: 1000;
+}
+.xp-modal.visible { display: flex; }
+.xp-modal-content {
+    background: #ECE9D8; border: 3px solid #0054E3;
+    border-radius: 8px 8px 0 0; box-shadow: 4px 4px 15px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+.xp-modal-header {
+    background: linear-gradient(180deg, #2F7FD0 0%, #1155BB 45%, #0C3C98 100%);
+    padding: 4px 8px; display: flex; align-items: center; justify-content: space-between;
+    color: white; font-family: 'Tahoma', sans-serif; font-size: 13px; font-weight: bold;
+}
+.xp-modal-body { padding: 20px; font-size: 13px; color: #000; }
+
+.xp-btn {
+    background: #ECE9D8; border: 1px solid #707070; border-radius: 3px;
+    padding: 3px 12px; cursor: pointer; font-size: 12px;
+    box-shadow: inset -1px -1px 1px #808080, inset 1px 1px 1px #FFFFFF;
+}
+.xp-btn:active { box-shadow: inset 1px 1px 1px #808080; }
+
+#nyan-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s;
+    filter: brightness(1.1);
+}

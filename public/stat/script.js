@@ -48,6 +48,10 @@ function calculateStats() {
     document.getElementById('count-likes').textContent = totalLikesReceived;
     
     document.getElementById('count-followers').textContent = currentUser.followers ? currentUser.followers.length : 0;
+    
+    const nyanCount = Storage.getNyanCatCount();
+    document.getElementById('count-nyancat').textContent = nyanCount;
+    document.getElementById('popup-nyan-count').textContent = nyanCount;
 
     renderActivityChart(userPosts);
 }
@@ -104,3 +108,27 @@ document.querySelectorAll('.xp-menu-item').forEach(item => {
         else if (text === 'Aide') alert('MiniBook v1.0 - Projet IHM\nUtilisez la zone de texte pour publier.');
     });
 });
+
+// Popup Nyan Cat
+const nyanCard = document.getElementById('nyan-card');
+const nyanPopup = document.getElementById('nyan-popup');
+const nyanClose = document.getElementById('nyan-popup-close');
+const nyanOk = document.getElementById('nyan-popup-ok');
+
+if (nyanCard) {
+    nyanCard.addEventListener('click', () => {
+        const errorSound = new Audio('../../asset/sond/Windows XP Infobulle.wav');
+        errorSound.play().catch(e => console.log(e));
+        nyanPopup.classList.add('visible');
+    });
+}
+if (nyanClose) {
+    nyanClose.addEventListener('click', () => {
+        nyanPopup.classList.remove('visible');
+    });
+}
+if (nyanOk) {
+    nyanOk.addEventListener('click', () => {
+        nyanPopup.classList.remove('visible');
+    });
+}

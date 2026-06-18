@@ -72,6 +72,31 @@
               <div class="stat-label">Abonnés</div>
             </div>
           </div>
+          <div class="stat-card" id="nyan-card" style="cursor:pointer; background: linear-gradient(90deg, #ff0000 0%, #ff9a00 10%, #d0de21 20%, #4fdc4a 30%, #3fdad8 40%, #2fc9e2 50%, #1c7fee 60%, #5f15f2 70%, #ba0cf8 80%, #fb07d9 90%, #ff0000 100%); color: white; text-shadow: 1px 1px 2px black;">
+            <div class="stat-icon">
+              <img src="../../asset/meme/poptart1redrainbowfix_1.gif" alt="Nyan" style="width: 50px; height: auto;">
+            </div>
+            <div class="stat-info">
+              <div class="stat-value" id="count-nyancat">0</div>
+              <div class="stat-label">Nyan Cats</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="nyan-popup" class="xp-modal">
+            <div class="xp-modal-content" style="width: 300px;">
+                <div class="xp-modal-header">
+                   <span class="title-text">Nyan Cat Explorer</span>
+                   <div class="xp-wbtn close" id="nyan-popup-close">✕</div>
+                </div>
+                <div class="xp-modal-body" style="text-align: center;">
+                    <img src="../../asset/meme/poptart1redrainbowfix_1.gif" style="width: 100px; margin-bottom: 10px;">
+                    <p style="margin: 10px 0; font-weight: bold; font-family: 'Sniglet', cursive;">INCROYABLE !</p>
+                    <p>Vous avez croisé <span id="popup-nyan-count" style="font-size: 1.5em; color: #ff00ff;">0</span> Nyan Cats !</p>
+                    <p style="font-size: 0.8em; color: #666;">Continuez à scroller pour en trouver d'autres.</p>
+                    <button class="xp-btn" id="nyan-popup-ok" style="margin-top: 15px; width: 60px;">OK</button>
+                </div>
+            </div>
         </div>
 
         <div class="xp-group">

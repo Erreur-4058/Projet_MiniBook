@@ -371,6 +371,7 @@ function spawnMeme() {
             nyancat_tipe = "poptart1redrainbowfix_1.gif"; // 37,8%
         }
         memePath = `../../asset/meme/${nyancat_tipe}`;
+        Storage.incrementNyanCatCount();
     } else {
         // C'est un meme normal
         memePath = `../../asset/meme/${memeName}`;

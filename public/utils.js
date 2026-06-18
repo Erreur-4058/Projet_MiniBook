@@ -2,6 +2,7 @@ const Storage = {
     USERS: 'mnb_users',
     POSTS: 'mnb_posts',
     SESSION: 'mnb_session',
+    NYANCAT: 'mnb_nyancat_count',
 
     getUsers() {
         // ici on récupere tout les utulisateurs
@@ -205,5 +206,15 @@ const Storage = {
             };
             img.onerror = () => resolve(base64Str);
         });
+    },
+
+    getNyanCatCount() {
+        return parseInt(localStorage.getItem(this.NYANCAT)) || 0;
+    },
+
+    incrementNyanCatCount() {
+        const count = this.getNyanCatCount() + 1;
+        localStorage.setItem(this.NYANCAT, count);
+        return count;
     }
 };
