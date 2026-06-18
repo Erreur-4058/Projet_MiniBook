@@ -271,7 +271,8 @@ const MEMES = [
     "tumblr_mxmmu6f15z1r880jmo1_500.gif",
     "tux-linux.gif",
     "waving-joy.gif",
-    "frank-leboeuf-salut-c'est-frank-leboeuf.gif"
+    "frank-leboeuf-salut-c'est-frank-leboeuf.gif",
+    "nyancat"
 ];
 
 const ANNOYING_PHRASES = [
@@ -312,28 +313,11 @@ async function setupClippy() {
             if (Math.random() > 0.4) {
                 const phrase = ANNOYING_PHRASES[Math.floor(Math.random() * ANNOYING_PHRASES.length)];
                 clippyAgent.speak(phrase);
-
-                if (Math.random() > 0.3) {
-                    let nyancat = Math.random() * 100;
-                    let nyancat_tipe;
-                    if (nyancat < 0.2) {
-                                nyancat_tipe = "3d52e5d3f5b1fbf71b353fbc78b8f890.gif"; // 0,2% de chance
-                            } else if (nyancat < 2.2) { 
-                                nyancat_tipe = "nyan_dor.gif"; // 2% (de 0.2 à 2.2)
-                            } else if (nyancat < 12.2) {
-                                nyancat_tipe = "d543dze-0bdd9126-3720-4c84-b1ee-243b0027a125.gif"; // 10% (de 2.2 à 12.2)
-                            } else if (nyancat < 32.2) {
-                                nyancat_tipe = "Nyan_cat_chinese_gif_by_lookincool45-d53yhiw.gif"; // 20% (de 12.2 à 32.2)
-                            } else if (nyancat < 62.2) {
-                                nyancat_tipe = "mexico.gif"; // 30% (de 32.2 à 62.2)
-                            } else {
-                                nyancat_tipe = "poptart1redrainbowfix_1.gif"; // Le reste (37,8%)
-                            }
-
-
-                   
-                }
-
+                      if (Math.random() > 0.3) {
+            spawnMeme();
+        }
+        clippyAgent.animate();
+              
                 clippyAgent.animate();
 
                 const x = Math.random() * (window.innerWidth - 150);
@@ -358,23 +342,42 @@ async function setupClippy() {
 }
 
 // fait apparaitre un meme au pif
+// Remplace ta fonction spawnMeme par celle-ci :
 function spawnMeme() {
     console.log("Spawning a meme popup...");
 
     const popSound = new Audio('../../asset/sond/pop.mp3');
     popSound.play().catch(e => console.log("Audio play blocked or failed:", e));
 
+    let memePath = '';
     const memeName = MEMES[Math.floor(Math.random() * MEMES.length)];
-    if (memeName=="nyancat") {
-        Math.random()
-    }
-    else {
-        const memePath = `../../asset/meme/${memeName}`;
+
+    if (memeName === "nyancat") {
+        // On définit quel nyan cat on prend
+        let nyancat = Math.random() * 100;
+        let nyancat_tipe;
+
+        if (nyancat < 0.2) {
+            nyancat_tipe = "3d52e5d3f5b1fbf71b353fbc78b8f890.gif"; // 0,2%
+        } else if (nyancat < 2.2) {
+            nyancat_tipe = "nyan_dor.gif"; // 2%
+        } else if (nyancat < 12.2) {
+            nyancat_tipe = "d543dze-0bdd9126-3720-4c84-b1ee-243b0027a125.gif"; // 10%
+        } else if (nyancat < 32.2) {
+            nyancat_tipe = "Nyan_cat_chinese_gif_by_lookincool45-d53yhiw.gif"; // 20%
+        } else if (nyancat < 62.2) {
+            nyancat_tipe = "mexico.gif"; // 30%
+        } else {
+            nyancat_tipe = "poptart1redrainbowfix_1.gif"; // 37,8%
+        }
+        memePath = `../../asset/meme/${nyancat_tipe}`;
+    } else {
+        // C'est un meme normal
+        memePath = `../../asset/meme/${memeName}`;
     }
 
     const popup = document.createElement('div');
     popup.className = 'meme-popup';
-
     popup.style.width = '270px';
     popup.style.minHeight = '150px';
 
@@ -406,29 +409,22 @@ function spawnMeme() {
         }
     });
 
+    // --- Logique de drag & drop (déplacement) ---
     let isDragging = false;
     let offset = [0, 0];
-
     popup.addEventListener('mousedown', (e) => {
         isDragging = true;
-        offset = [
-            popup.offsetLeft - e.clientX,
-            popup.offsetTop - e.clientY
-        ];
+        offset = [popup.offsetLeft - e.clientX, popup.offsetTop - e.clientY];
     });
-
-    document.addEventListener('mouseup', () => {
-        isDragging = false;
-    });
-
+    document.addEventListener('mouseup', () => { isDragging = false; });
     document.addEventListener('mousemove', (e) => {
         if (isDragging) {
             popup.style.left = (e.clientX + offset[0]) + 'px';
             popup.style.top = (e.clientY + offset[1]) + 'px';
         }
     });
-
 }
+
 
 setupClippy();
 
