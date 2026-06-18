@@ -1,12 +1,8 @@
-/**
- * Shared storage and authentication logic for MiniBook
- */
 const Storage = {
     USERS: 'mnb_users',
     POSTS: 'mnb_posts',
     SESSION: 'mnb_session',
 
-    // --- USERS ---
     getUsers() {
         try {
             return JSON.parse(localStorage.getItem(this.USERS)) || [];
@@ -17,7 +13,6 @@ const Storage = {
 
     saveUser(user) {
         const users = this.getUsers();
-        // Check if email already exists
         if (users.some(u => u.email === user.email)) {
             return { success: false, message: 'Cet e-mail est déjà utilisé.' };
         }
@@ -31,7 +26,6 @@ const Storage = {
         return users.find(u => u.email === email) || { pseudo: 'Utilisateur inconnu', avatar: 'https://www.w3schools.com/howto/img_avatar.png' };
     },
 
-    // --- SESSION ---
     login(email, password) {
         const users = this.getUsers();
         const user = users.find(u => u.email === email && u.password === password);
@@ -44,8 +38,6 @@ const Storage = {
 
     logout() {
         localStorage.removeItem(this.SESSION);
-        // Special case: if we are in a subfolder, we go up. 
-        // But since we are in separate folders, we use absolute-like path or relative.
         window.location.href = '../login/index.html';
     },
 
@@ -59,7 +51,6 @@ const Storage = {
         }
     },
 
-    // Check if logged in, otherwise redirect
     checkAuth() {
         if (!this.getLoggedInUser()) {
             const path = window.location.pathname;
@@ -69,7 +60,6 @@ const Storage = {
         }
     },
 
-    // --- POSTS ---
     getPosts() {
         try {
             return JSON.parse(localStorage.getItem(this.POSTS)) || [];
@@ -91,8 +81,6 @@ const Storage = {
         const newPost = {
             id: 'post-' + Date.now(),
             authorEmail: user.email,
-            // We no longer store authorName and authorAvatar here to save space
-            // They will be looked up at runtime
             text: text,
             image: processedImage,
             likes: 0,
@@ -141,7 +129,6 @@ const Storage = {
         return null;
     },
 
-    // --- FOLLOW / UNFOLLOW ---
     toggleFollow(targetEmail) {
         const users = this.getUsers();
         const currentUser = this.getLoggedInUser();
@@ -156,39 +143,34 @@ const Storage = {
 
             const index = me.following.indexOf(targetEmail);
             if (index === -1) {
-                // Follow
                 me.following.push(targetEmail);
                 target.followers.push(me.email);
             } else {
-                // Unfollow
                 me.following.splice(index, 1);
                 target.followers.splice(target.followers.indexOf(me.email), 1);
             }
 
             localStorage.setItem(this.USERS, JSON.stringify(users));
-            localStorage.setItem(this.SESSION, JSON.stringify(me)); // Update current session
+            localStorage.setItem(this.SESSION, JSON.stringify(me)); 
             return me;
         }
         return null;
     },
 
-    // --- FEED LOGIC ---
     getPrioritizedPosts() {
         const posts = this.getPosts();
         const user = this.getLoggedInUser();
         if (!user || !user.following) return posts;
 
-        // On trie : d'abord ceux qu'on suit, puis les autres
         return [...posts].sort((a, b) => {
             const aFollowed = user.following.includes(a.authorEmail);
             const bFollowed = user.following.includes(b.authorEmail);
             if (aFollowed && !bFollowed) return -1;
             if (!aFollowed && bFollowed) return 1;
-            return 0; // Garde l'ordre chronologique si même statut
+            return 0; 
         });
     },
 
-    // --- UTILS ---
     resizeImage(base64Str, maxWidth = 800, maxHeight = 600) {
         return new Promise((resolve) => {
             const img = new Image();
@@ -214,9 +196,9 @@ const Storage = {
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-                resolve(canvas.toDataURL('image/jpeg', 0.7)); // Compress to JPEG with 0.7 quality
+                resolve(canvas.toDataURL('image/jpeg', 0.7)); 
             };
-            img.onerror = () => resolve(base64Str); // Fallback
+            img.onerror = () => resolve(base64Str); 
         });
     }
 };

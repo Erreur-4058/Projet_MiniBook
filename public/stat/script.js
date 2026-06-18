@@ -1,9 +1,7 @@
 
-// 1. Auth Check
 Storage.checkAuth();
 const currentUser = Storage.getLoggedInUser();
 
-// 2. Favicon
 const frames = [
     "../../asset/favicon/256_frame1.png",
     "../../asset/favicon/256_frame2.png",
@@ -21,14 +19,12 @@ setInterval(() => {
     }
 }, 200);
 
-// 3. Status Bar & Sidebar
 if (currentUser) {
     document.getElementById('user-display').textContent = `Utilisateur : ${currentUser.pseudo}`;
     document.getElementById('stat-avatar-pic').src = currentUser.avatar || '../feed/tux.jpg';
     document.getElementById('stat-username-text').textContent = currentUser.pseudo;
 }
 
-// 4. Close btn (Back to feed)
 document.querySelector('.xp-wbtn.close').addEventListener('click', () => {
     window.location.href = '../feed/index.html';
 });
@@ -39,12 +35,10 @@ document.querySelector('#help-btn').addEventListener('click', () => {
     window.location.href = 'https://watchbutdonotlearn.github.io/';
 });
 
-// 5. Data Calculation
 function calculateStats() {
     const allPosts = Storage.getPosts();
     const userPosts = allPosts.filter(p => p.authorEmail === currentUser.email);
     
-    // Summary
     document.getElementById('count-posts').textContent = userPosts.length;
     
     let totalLikesReceived = 0;
@@ -53,10 +47,8 @@ function calculateStats() {
     });
     document.getElementById('count-likes').textContent = totalLikesReceived;
     
-    // Followers placeholder (as it's an advanced feature)
     document.getElementById('count-followers').textContent = currentUser.followers ? currentUser.followers.length : 0;
 
-    // Chart logic (Activity last 7 days)
     renderActivityChart(userPosts);
 }
 
@@ -69,7 +61,6 @@ function renderActivityChart(posts) {
     const today = new Date();
     const days = [];
     
-    // Get last 7 days
     for (let i = 6; i >= 0; i--) {
         const date = new Date();
         date.setDate(today.getDate() - i);
@@ -80,17 +71,13 @@ function renderActivityChart(posts) {
         });
     }
 
-    // Count posts per day
     posts.forEach(post => {
         const postDate = new Date(post.timestamp).toLocaleDateString();
         const dayObj = days.find(d => d.dateStr === postDate);
         if (dayObj) dayObj.count++;
     });
 
-    // Find max for scaling
-    const maxPosts = Math.max(...days.map(d => d.count), 5); // min 5 for visual scale
-
-    // Create bars
+    const maxPosts = Math.max(...days.map(d => d.count), 5); 
     days.forEach(day => {
         const bar = document.createElement('div');
         bar.className = 'bar';
@@ -106,7 +93,6 @@ function renderActivityChart(posts) {
     });
 }
 
-// Initial calculation
 calculateStats();
 
 

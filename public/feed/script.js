@@ -1,9 +1,7 @@
 
-// 1. Authentification check
 Storage.checkAuth();
 const currentUser = Storage.getLoggedInUser();
 
-// 2. Favicon Animation
 const frames = [
     "../../asset/favicon/256_frame1.png",
     "../../asset/favicon/256_frame2.png",
@@ -21,12 +19,10 @@ setInterval(() => {
     }
 }, 200);
 
-// 3. User Info initialization
 if (currentUser) {
     document.getElementById('avatar-picture').src = currentUser.avatar || 'tux.jpg';
     document.querySelector('.sidebar-username').textContent = currentUser.pseudo;
     
-    // Play login sound on first interaction (browser policy)
     const playLoginSound = () => {
         const sound = new Audio('../../asset/sond/Windows XP Ouverture de session.wav');
         sound.play().catch(e => console.log("L'audio n'a pas pu être lancé :", e));
@@ -37,24 +33,21 @@ if (currentUser) {
     document.addEventListener('keydown', playLoginSound);
 }
 
-// 4. Logout (Croix fermer)
 document.querySelector('.xp-wbtn.close').addEventListener('click', () => {
     const errorSound = new Audio('../../asset/sond/Windows XP Fermeture de session.wav');
-    errorSound.play().catch(() => Storage.logout()); // If sound fails, logout immediately
+    errorSound.play().catch(() => Storage.logout()); 
     errorSound.onended = () => {
         Storage.logout();
     };
-    // Fallback if sound is long or blocked
     setTimeout(() => Storage.logout(), 2000);
 });
 
 document.querySelector('.down').addEventListener('click',() => {
     const errorSound = new Audio('../../asset/sond/son_1.mp3');
-    errorSound.play().catch(() => Storage.logout()); // If sound fails, logout immediately  
+    errorSound.play().catch(() => Storage.logout()); 
 });
 
 
-// 5. Menu Navigation
 document.querySelectorAll('.xp-menu-item').forEach(item => {
     item.addEventListener('click', (e) => {
         const text = e.target.textContent;
@@ -68,7 +61,6 @@ document.querySelectorAll('.xp-menu-item').forEach(item => {
     });
 });
 
-// Help Modal Close
 document.getElementById('help-close-btn').addEventListener('click', () => {
     document.getElementById('help-modal').classList.remove('visible');
 });
@@ -76,10 +68,9 @@ document.getElementById('help-ok-btn').addEventListener('click', () => {
     document.getElementById('help-modal').classList.remove('visible');
 });
 
-// 6. Posts Management
 function renderPosts() {
     const feed = document.getElementById('feed');
-    const posts = Storage.getPosts();
+    const posts = Storage.getPrioritizedPosts();
     feed.innerHTML = '';
 
     posts.forEach(post => {
@@ -96,6 +87,7 @@ function createPostElement(post) {
 
     const isOwner = post.authorEmail === currentUser.email;
     const isLiked = post.likedBy && post.likedBy.includes(currentUser.email);
+    const isFollowed = currentUser.following && currentUser.following.includes(post.authorEmail);
 
     const author = Storage.getUserInfo(post.authorEmail);
     const authorName = author.pseudo || 'Utilisateur';
@@ -112,6 +104,12 @@ function createPostElement(post) {
                     <div class="post-author">${authorName}</div>
                     <div class="post-time">${new Date(post.timestamp).toLocaleString()}</div>
                 </div>
+                ${!isOwner ? `
+                <button class="xp-btn follow-btn ${isFollowed ? 'follow-active' : ''}" onclick="handleFollow('${post.authorEmail}')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M128,128a56,56,0,1,0-56-56A56,56,0,0,0,128,128Zm0,16c-37.42,0-112,18.71-112,56v16a8,8,0,0,0,8,8H232a8,8,0,0,0,8-8V200C240,162.71,165.42,144,128,144Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+                    ${isFollowed ? 'Ne plus suivre' : 'Suivre'}
+                </button>
+                ` : ''}
             </div>
             <div class="post-text">${post.text}</div>
             <div class="post-actions">
@@ -123,6 +121,16 @@ function createPostElement(post) {
         </div>
     `;
     return div;
+}
+
+function handleFollow(targetEmail) {
+    const updatedUser = Storage.toggleFollow(targetEmail);
+    if (updatedUser) {
+        Object.assign(currentUser, updatedUser);
+        renderPosts();
+        const sound = new Audio('../../asset/sond/Windows XP Infobulle.wav');
+        sound.play().catch(e => console.log("L'audio n'a pas pu être lancé :", e));
+    }
 }
 
 function handleLike(postId) {
@@ -200,23 +208,17 @@ async function addPost() {
 
     const newPost = await Storage.addPost(msg, image);
     if (newPost) {
-        // Reset fields
         document.getElementById('msg-input').value = '';
         document.getElementById('img-input').value = '';
         document.getElementById('file-name').textContent = 'Aucun fichier';
         mini.style.display = 'none';
 
-        // Render
         renderPosts();
     }
 }
 
-// Initial render
 renderPosts();
 
-// ---------------------------------------------------------
-// CLIPPY & MEME POPUP TROLLING LOGIC
-// ---------------------------------------------------------
 
 const MEMES = [
     "200.gif",
@@ -284,7 +286,6 @@ const ANNOYING_PHRASES = [
 let clippyAgent = null;
 
 async function setupClippy() {
-    // Small retry mechanism just in case
     let attempts = 0;
     while (!window.initClippy && attempts < 10) {
         console.log("Waiting for Clippy...");
@@ -298,32 +299,25 @@ async function setupClippy() {
         clippyAgent.speak("Salut ! Je suis Clippy, je vais t'embêter un peu !");
         clippyAgent.animate();
 
-        // Spawn one immediately for testing
         setTimeout(spawnMeme, 2000);
         
-        // Random behavior interval
         setInterval(() => {
-            // Increased frequency for better trolling
             if (Math.random() > 0.4) {
                 const phrase = ANNOYING_PHRASES[Math.floor(Math.random() * ANNOYING_PHRASES.length)];
                 clippyAgent.speak(phrase);
                 
-                // 70% chance to spawn a meme when speaking
                 if (Math.random() > 0.3) {
                     spawnMeme();
                 }
                 
-                // Random animation
                 clippyAgent.animate();
                 
-                // Move to random position
                 const x = Math.random() * (window.innerWidth - 150);
                 const y = Math.random() * (window.innerHeight - 150);
                 clippyAgent.moveTo(x, y);
             }
-        }, 8000); // Check every 8 seconds
+        }, 8000);
 
-        // Interaction triggers
         window.addEventListener('scroll', () => {
             if (Math.random() > 0.98) {
                 clippyAgent.speak("Doucement sur le scroll !");
@@ -342,7 +336,6 @@ async function setupClippy() {
 function spawnMeme() {
     console.log("Spawning a meme popup...");
     
-    // Play sound
     const popSound = new Audio('../../asset/sond/pop.mp3');
     popSound.play().catch(e => console.log("Audio play blocked or failed:", e));
 
@@ -352,11 +345,9 @@ function spawnMeme() {
     const popup = document.createElement('div');
     popup.className = 'meme-popup';
     
-    // Ensure dimensions for visibility even if image loads slowly
     popup.style.width = '270px';
     popup.style.minHeight = '150px';
     
-    // Random position within visible range
     const maxX = Math.max(0, window.innerWidth - 300);
     const maxY = Math.max(0, window.innerHeight - 300);
     const x = Math.random() * maxX;
@@ -385,7 +376,6 @@ function spawnMeme() {
         }
     });
 
-    // Make it draggable (basic version)
     let isDragging = false;
     let offset = [0, 0];
     
@@ -408,10 +398,8 @@ function spawnMeme() {
         }
     });
 
-    // Auto-remove after some time if not closed? No, keep it to annoy.
 }
 
-// Start the madness
 setupClippy();
 
 

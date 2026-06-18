@@ -1,14 +1,11 @@
-// Toggle password visibility
     const pwInput = document.getElementById('password');
     const slashLine = document.getElementById('slash-line');
     let pwVisible = false;
 
 
-    // Ripple effect on login button
     const loginBtn = document.getElementById('login-btn');
     loginBtn.addEventListener('click', async function(e) {
   
-      // Ripple
       const rect = this.getBoundingClientRect();
       const ripple = document.createElement('span');
       ripple.className = 'ripple';
@@ -17,7 +14,6 @@
       this.appendChild(ripple);
       setTimeout(() => ripple.remove(), 600);
 
-      // Validation
       const pseudo = document.getElementById('pseudo').value.trim();
       const email = document.getElementById('email').value.trim();
       const pw = document.getElementById('password').value.trim();
@@ -40,10 +36,8 @@
         loginBtn.textContent = 'Création du compte...';
         loginBtn.style.opacity = '0.8';
         
-        // Get avatar from preview
         const avatar = document.getElementById('preview').src;
 
-        // Resize avatar
         let processedAvatar = avatar;
         if (avatar && avatar.startsWith('data:image')) {
             processedAvatar = await Storage.resizeImage(avatar, 200, 200);
@@ -59,7 +53,6 @@
         setTimeout(() => {
           const result = Storage.saveUser(newUser);
           if (result.success) {
-            // Auto login after sign up
             Storage.login(email, pw);
             window.location.href = '../feed/index.html';
           } else {
@@ -71,7 +64,6 @@
       }
     });
 
-    // Remove error on input
     document.getElementById('email').addEventListener('input', () => {
       document.getElementById('email-error').classList.remove('show');
     });
@@ -79,7 +71,6 @@
       document.getElementById('pw-error').classList.remove('show');
     });
 
-    // Enter key support
     ['pseudo', 'email', 'password', 'password_Confirme'].forEach(id => {
       document.getElementById(id).addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
@@ -120,7 +111,7 @@ let index = 0;
 
 setInterval(() => {
     const favicon = document.getElementById("favicon");
-    favicon.href = frames[index] + "?v=" + Date.now(); // évite le cache
+    favicon.href = frames[index] + "?v=" + Date.now(); 
     
     index = (index + 1) % frames.length;
 }, 200);

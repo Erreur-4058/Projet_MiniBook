@@ -1,9 +1,7 @@
 
-// 1. Auth check
 Storage.checkAuth();
 const currentUser = Storage.getLoggedInUser();
 
-// 2. Favicon Animation
 const frames = [
     "../../asset/favicon/256_frame1.png",
     "../../asset/favicon/256_frame2.png",
@@ -21,13 +19,11 @@ setInterval(() => {
     }
 }, 200);
 
-// 3. Populate fields
 if (currentUser) {
     document.getElementById('pseudo').value = currentUser.pseudo || '';
     document.getElementById('email').value = currentUser.email || '';
     document.getElementById('preview').src = currentUser.avatar || 'https://www.w3schools.com/howto/img_avatar.png';
     
-    // Play login sound on first interaction (browser policy)
     const playLoginSound = () => {
         const sound = new Audio('../../asset/sond/Windows XP Ouverture de session.wav');
         sound.play().catch(e => console.log("L'audio n'a pas pu être lancé :", e));
@@ -38,7 +34,6 @@ if (currentUser) {
     document.addEventListener('keydown', playLoginSound);
 }
 
-// 4. Avatar change
 document.getElementById('profile-pic').addEventListener('change', function() {
     const file = this.files[0];
     if (file) {
@@ -48,7 +43,6 @@ document.getElementById('profile-pic').addEventListener('change', function() {
     }
 });
 
-// 5. Actions
 document.getElementById('save-btn').addEventListener('click', async () => {
     const pseudoInput = document.getElementById('pseudo');
     const emailInput = document.getElementById('email');
@@ -65,7 +59,6 @@ document.getElementById('save-btn').addEventListener('click', async () => {
 
     let isValid = true;
 
-    // Helper to toggle error
     const showError = (input, errorId, show, message) => {
         const errorSpan = document.getElementById(errorId);
         if (show) {
@@ -79,24 +72,18 @@ document.getElementById('save-btn').addEventListener('click', async () => {
         }
     };
 
-    // Validate Pseudo
     showError(pseudoInput, 'pseudo-error', pseudo === '');
 
-    // Validate Email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     showError(emailInput, 'email-error', !emailRegex.test(email));
 
-    // Validate Old Password
     showError(oldPwInput, 'old-pw-error', oldPw !== currentUser.password);
 
-    // Validate New Password (if not empty)
     if (newPw !== "" || confirmPw !== "") {
-        // Complexity check: min 8 chars, 1 upper, 1 lower, 1 number, 1 special
         const complexityRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
         const isComplex = complexityRegex.test(newPw);
         showError(newPwInput, 'new-pw-error', !isComplex);
         
-        // Confirmation check
         showError(confirmPwInput, 'confirm-pw-error', newPw !== confirmPw);
     } else {
         showError(newPwInput, 'new-pw-error', false);
@@ -105,10 +92,8 @@ document.getElementById('save-btn').addEventListener('click', async () => {
 
     if (!isValid) return;
 
-    // Everything is valid, update user
     const users = Storage.getUsers();
 
-    // Check if new email is already taken by another user
     const existingUser = users.find(u => u.email === email && u.email !== currentUser.email);
     if (existingUser) {
         showError(emailInput, 'email-error', true, 'Cet e-mail est déjà utilisé.');
@@ -118,17 +103,15 @@ document.getElementById('save-btn').addEventListener('click', async () => {
     const userIndex = users.findIndex(u => u.email === currentUser.email);
     
     if (userIndex !== -1) {
-        // Resize avatar if it's new
         let processedAvatar = avatar;
         if (avatar && avatar.startsWith('data:image')) {
-            processedAvatar = await Storage.resizeImage(avatar, 200, 200); // Avatars are small
+            processedAvatar = await Storage.resizeImage(avatar, 200, 200); 
         }
 
         users[userIndex].pseudo = pseudo;
         users[userIndex].email = email;
         users[userIndex].avatar = processedAvatar;
         
-        // Update password if a new one was provided
         if (newPw !== "") {
             users[userIndex].password = newPw;
         }
@@ -141,7 +124,6 @@ document.getElementById('save-btn').addEventListener('click', async () => {
             return;
         }
         
-        // Optional: show a small success indication or just redirect
         window.location.href = '../feed/index.html';
     }
 });
@@ -173,10 +155,9 @@ document.getElementById('confirm-delete-btn').addEventListener('click', () => {
     
     setTimeout(() => {
         Storage.logout();
-    }, 1000); // Leave time to hear the sound
+    }, 1000); 
 });
 
-// Enter key support
 ['pseudo', 'email', 'old-password', 'new-password', 'confirm-password'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
@@ -188,7 +169,6 @@ document.getElementById('confirm-delete-btn').addEventListener('click', () => {
     }
 });
 
-// Window close
 document.querySelector('.xp-wbtn.close').addEventListener('click', () => {
     window.location.href = '../feed/index.html';
 });

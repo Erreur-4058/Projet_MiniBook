@@ -521,6 +521,17 @@ svg {
   font-weight: 700;
 }
 
+.xp-btn.follow-btn {
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.xp-btn.follow-active {
+  color: #316AC5;
+  border-color: #316AC5;
+  background: linear-gradient(180deg, #E0EBFF 0%, #C0D0FF 100%);
+}
+
 .like-count {
   font-family: 'Tahoma', sans-serif;
   font-size: 12px;

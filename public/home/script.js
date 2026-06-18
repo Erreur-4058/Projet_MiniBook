@@ -15,7 +15,7 @@ let index = 0;
 
 setInterval(() => {
     const favicon = document.getElementById("favicon");
-    favicon.href = frames[index] + "?v=" + Date.now(); // évite le cache
+    favicon.href = frames[index] + "?v=" + Date.now(); 
     
     index = (index + 1) % frames.length;
 }, 200);

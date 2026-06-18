@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!isValid) return;
 
-        // Simulation d'envoi et modification réelle
         resetBtn.disabled = true;
         resetBtn.innerText = 'Réinitialisation...';
 
@@ -53,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Mise à jour réelle du mot de passe
             users[userIndex].password = password;
             localStorage.setItem(Storage.USERS, JSON.stringify(users));
 

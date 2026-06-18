@@ -1,19 +1,11 @@
-// Toggle password visibility
     const pwInput = document.getElementById('password');
     const toggleBtn = document.getElementById('toggle-pw');
     const slashLine = document.getElementById('slash-line');
     let pwVisible = false;
 
-   /* toggleBtn.addEventListener('click', () => {
-      pwVisible = !pwVisible;
-      pwInput.type = pwVisible ? 'text' : 'password';
-      slashLine.style.display = pwVisible ? 'none' : 'inline';
-    });*/
-
-    // Ripple effect on login button
+   
     const loginBtn = document.getElementById('login-btn');
     loginBtn.addEventListener('click', function(e) {
-      // Ripple
       
       const rect = this.getBoundingClientRect();
       const ripple = document.createElement('span');
@@ -23,7 +15,6 @@
       this.appendChild(ripple);
       setTimeout(() => ripple.remove(), 600);
 
-      // Validation
       const email = document.getElementById('email').value.trim();
       const pw = document.getElementById('password').value.trim();
       const emailErr = document.getElementById('email-error');
@@ -49,7 +40,6 @@
       }
     });
 
-    // Remove error on input
     document.getElementById('email').addEventListener('input', () => {
       document.getElementById('email-error').classList.remove('show');
     });
@@ -57,7 +47,6 @@
       document.getElementById('pw-error').classList.remove('show');
     });
 
-    // Enter key support
     [document.getElementById('email'), document.getElementById('password')].forEach(input => {
       input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
@@ -94,7 +83,7 @@ let index = 0;
 
 setInterval(() => {
     const favicon = document.getElementById("favicon");
-    favicon.href = frames[index] + "?v=" + Date.now(); // évite le cache
+    favicon.href = frames[index] + "?v=" + Date.now(); 
     
     index = (index + 1) % frames.length;
 }, 200);
